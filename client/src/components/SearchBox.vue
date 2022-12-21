@@ -22,11 +22,11 @@ defineProps({
 </template>
 
 
-<style scoped>
+<style lang="scss" scoped>
 
 .search-box {
     padding: 8px 15px;
-    background-color: green;
+    background-color: var(--surface-default-low);
     border-radius: 8px;
     display: flex;
     margin-bottom: 30px;

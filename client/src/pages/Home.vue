@@ -23,7 +23,7 @@
 </template>
 
 
-<style scoped>
+<style lang="scss" scoped>
 
 .hero {
     height: 100vh;

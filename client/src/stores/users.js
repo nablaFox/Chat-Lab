@@ -9,12 +9,12 @@ export const useUserStore = defineStore('users', () => {
     const user = ref('')
 
     async function getAll() {
-        const response = await axios.get('http://localhost:3000/users')
+        const response = await axios.get('http://cathost.ddns.net/users')
         users.value = response.data
     }
 
     async function getByUsername(username) {
-        const response = await axios.get('http://localhost:3000/users/', {
+        const response = await axios.get('http://cathost.ddns.net/users/', {
             params: {
                 username: username
             }
@@ -23,7 +23,7 @@ export const useUserStore = defineStore('users', () => {
     }
 
     async function getById(userId) {
-        const response = await axios.get(`http://localhost:3000/users/${userId}`)
+        const response = await axios.get(`http://cathos.ddns.net/users/${userId}`)
         user.value = response.data;
     }
 

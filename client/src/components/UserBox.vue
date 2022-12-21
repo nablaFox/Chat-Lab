@@ -28,7 +28,7 @@ function startChat() {
             </div>
 
             <div class="user-box__bio">
-                Bio test
+                {{ bio }}
             </div>
         </div>
 
@@ -42,15 +42,18 @@ function startChat() {
 
 
 
-<style scoped>
+<style lang="scss" scoped>
 
 .user-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 10px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid var(--border-default-low);
+}
+
+.user-box:last-child {
+    border-bottom: 1px solid var(--border-default-low);
 }
 
 </style>

@@ -1,6 +1,6 @@
 <script setup>
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 defineEmits(['select'])
 
@@ -29,7 +29,10 @@ const lastDate = computed(() => {
 
 <template>
 
-    <div class="chat-box" @click="$emit('select')">
+    <div class="chat-box" 
+        @click="$emit('select')"
+        :class="{'is-clicked': clicked}"
+    >
         <div class="chat-box__pic">
 
         </div>
@@ -55,11 +58,21 @@ const lastDate = computed(() => {
 
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+
+@import "@design";
 
 .chat-box {
     display: flex;
     align-items: center;
+    cursor: pointer;
+
+    &:hover { background-color: var(--border-default-low) }
+}
+
+.is-clicked {
+    background-color: var(--border-default-medium);
+
 }
 
 .chat-box__pic {
@@ -72,6 +85,16 @@ const lastDate = computed(() => {
 
 .chat-box__username {
     margin-bottom: 5px;
+    font-size: $text-5;
+}
+
+.chat-box__last-msg {
+    color: var(--text-default-low)
+}
+
+.chat-box__timestamp {
+    font-size: $text-2;
+    color: var(--text-default-medium)
 }
 
 .chat-box__right {
@@ -79,8 +102,11 @@ const lastDate = computed(() => {
     display: flex;
     margin-left: 10px;
     padding: 20px 10px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid var(--border-default-low);
+}
+
+.chat-box:last-child .chat-box__right {
+    border-bottom: 1px solid var(--border-default-low);
 }
 
 .chat-box__timestamp {

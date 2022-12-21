@@ -46,7 +46,7 @@ function onSubmit() {
 
 
 
-<style scoped>
+<style lang="scss" scoped>
 
 .login-wrapper {
     width: 800px;

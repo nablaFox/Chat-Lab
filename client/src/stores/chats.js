@@ -2,25 +2,25 @@ import { defineStore } from "pinia";
 import { ref } from 'vue'
 import axios from 'axios'
 
-const ws = new WebSocket('ws://localhost:8000')
+const ws = new WebSocket('ws://cathost.ddns.net/ws')
 
 export const useChatStore = defineStore('chats', () => {
     const chats = ref('')
     const chat = ref('')
 
     async function getByUser(userId) {
-        const response = await axios.get(`http://localhost:3000/chats/user/${userId}`)
+        const response = await axios.get(`http://cathost.ddns.net/chats/user/${userId}`)
         chats.value = response.data
     }
 
     async function getById(chatId) {
-        const response = await axios.get(`http://localhost:3000/chats/${chatId}`)
+        const response = await axios.get(`http://cathost.ddns.net/chats/${chatId}`)
         chat.value = response.data
     }
 
     async function start(sender, recipient) {
         try {
-            await axios.post('http://localhost:3000/chats', {
+            await axios.post('http://cathost.ddns.net/chats', {
                 participants: [sender, recipient],
                 messages: [{
                     timestamp: Date.now(),
@@ -46,7 +46,7 @@ export const useChatStore = defineStore('chats', () => {
         const user = JSON.parse(localStorage.getItem('user'));
         const token = user.accessToken;
 
-        return axios.post('http://localhost:3000/chats/sendMessage', {
+        return axios.post('http://cathost.ddns.net/chats/sendMessage', {
             participants: [sender, recipient],
             sender: sender,
             text: text,

@@ -1,0 +1,27 @@
+@mixin flex($justify: center, $align: center, $direction: row) {
+    display: Flex;
+    justify-content: $justify;
+    align-items: $align;
+    flex-direction: $direction;
+}
+
+@mixin pos($l: unset, $t: unset, $r: unset, $b: unset, $y-off: 0, $x-off: 0) {
+    position: absolute;
+
+    $x-offset: 0;
+    $y-offset: 0;
+
+    @if $y-off { $x-offset: $x-off }
+    @if $x-off { $y-offset: $y-off }
+
+    transform: translate($x-offset, $y-offset);
+
+    left: $l;
+    right: $r;
+    top: $t;
+    bottom: $b
+}
+
+@mixin size($breakpoint) {
+    @media screen and (min-width: #{$breakpoint}) { @content }
+}

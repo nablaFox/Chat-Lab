@@ -43,7 +43,9 @@ const isSender = computed(() => {
 
 
 
-<style scoped>
+<style lang="scss" scoped>
+
+@import "@design";
 
 .message-container {
     margin-bottom: 20px;
@@ -57,8 +59,15 @@ const isSender = computed(() => {
     padding: 7px;
 }
 
+
 .message__date {
     text-align: right;
+    font-size: $text-1;
+    color: var(--text-default-medium);
+}
+
+.message__text {
+    font-size: $text-4;
 }
 
 .sender {
@@ -66,7 +75,7 @@ const isSender = computed(() => {
 }
 
 .message-container.sender .message {
-    background-color: green;
+    background-color: var(--brand-primary-high);
 }
 
 .message-container.recipient .message {

@@ -61,32 +61,27 @@ function send() {
 
 
 
-<style scoped>
+<style lang="scss" scoped>
+
+@import "@design";
 
 .controls {
-    height: 100px;
-    background-color: purple;
+    background-color: var(--surface-default-medium);
     display: flex;
     align-items: center;
-    padding: 3px 0;
+    padding: 10px 0;
+    font-size: $text-5;
 }
 
 .controls__middle {
     width: 80%;
-    background-color: palegreen;
-    border-radius: 6px;
-    padding: 5px;
+    background-color: var(--surface-default-low);
+    border-radius: 7px;
+    padding: 13px 14px;
+
 }
 
-input {
-    width: 100%;
-    border: none;
-    background: transparent;
-    user-select: none;
-    -webkit-user-select: none;  /* Chrome all / Safari all */
-    -moz-user-select: none;
-    outline: none;
-}
+
 
 .controls__left {
     margin-right: 50px;

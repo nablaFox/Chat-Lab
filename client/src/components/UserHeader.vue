@@ -1,11 +1,5 @@
 <script setup>
 
-
-const props = defineProps({
-    username: String
-})
-
-
 </script>
 
 
@@ -13,29 +7,34 @@ const props = defineProps({
 
 
     <header class="user-header">
+        <div class="user-header__left">
+            <div class="user-header__photo"></div>
 
-        <div class="user-header__photo">
-            
+            <slot name="left"></slot>
         </div>
 
-        <div class="user__header__username">
-            {{ username }}
-        </div>
-
+        <slot name="right"></slot>
     </header>
 
 </template>
 
 
 
-<style scoped>
+<style lang="scss" scoped>
 
+@import "@design";
 
 .user-header {
     padding: 10px 16px;
-    background-color: red;
+    background-color: var(--surface-default-low);
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    font-size: $text-5;
+}
+
+.user-header__left {
+    display: flex;
     align-items: center;
 }
 
@@ -44,6 +43,7 @@ const props = defineProps({
     width: 43px;
     height: 43px;
     background-color: black;
+    margin-right: 13px;
 }
 
 </style>

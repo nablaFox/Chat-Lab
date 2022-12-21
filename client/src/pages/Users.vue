@@ -72,7 +72,7 @@ onMounted(() => {
 
     <div class="wrapper">
         <div class="chats-container">
-            <UserHeader :username="getUsername(route.params.id)"/>
+            <UserHeader> </UserHeader>
 
             <div class="chats-wrapper">
                 <SearchBox v-model:text="searched"/>
@@ -104,7 +104,9 @@ onMounted(() => {
         <div class="messages-container">
 
             <template v-if="chatSelected">
-                <UserHeader :username="getUsername(recipient)"/>
+                <UserHeader>
+                    <template #left> {{ getUsername(recipient) }}</template> 
+                </UserHeader>
 
                 <div class="messages-wrapper" ref="wrapper">
                     <div class="messages">
@@ -150,17 +152,22 @@ onMounted(() => {
 </template>
 
 
-<style scoped>
+<style lang="scss" scoped>
+
+@import "@design";
 
 .wrapper {
     display: flex;
-    width: 100vw;
+    max-width: 1600px;
+    margin: 0 auto;
     height: 100vh;
+
+    @include size(1441px) { padding: 19px 0 }
 }
 
 .chats-container {
     flex: 1;
-    border-right: 1px solid black;
+    border-right: 1px solid var(--border-default-low);
     overflow: hidden;
 }
 
@@ -173,14 +180,14 @@ onMounted(() => {
 
 .messages-wrapper {
     overflow-y: scroll;
-    height: 100vh;
+    height: 100%;
 }
 
 .messages {
     padding-top: 50px;
     padding-left: 80px;
     padding-right: 80px;
-    background-color: blue;
+    background-color: var(--bg-default-high);
     min-height: 100%;
     display: flex;
     flex-direction: column;
@@ -199,7 +206,7 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
 }
 
 

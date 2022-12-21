@@ -1,0 +1,30 @@
+$palette-colors: (
+    'primary-1': #00a884,
+    'primary-2': #008970,
+    'primary-3': #00775c,
+    'primary-4': #006650,
+
+    'neutral-1': '#fff',
+    'neutral-2': '#f0f2f5',
+    'neutral-3': '#e1e1dd',
+    'neutral-4': '#efeae2',
+    'neutral-5': '#202c33',
+    'neutral-6': '#182126',
+    'neutral-7': '#111b21',
+    'neutral-8': '#0b141a',
+
+    'info-1': '#8696a0',
+    'info-2': '#99beb7',
+    'info-3': '#2f3b43',
+    
+
+    'warning-1': '#ffc4d5',
+    'warning-2': '#f13b6b',
+    'warning-3': 'e71b4c',
+    'warning-4': 'cc0e3c'
+);
+
+
+@function palette-color($key) {
+    @return map-get($palette-colors, $key)
+}
