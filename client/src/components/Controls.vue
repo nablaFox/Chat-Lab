@@ -3,17 +3,19 @@
 import { ref } from 'vue'
 import { useChatStore } from '@stores/chats'
 
+import VueTextArea from '@components/VueTextArea.vue'
+
 const props = defineProps({
     sender: String,
     recipient: String,
-    chatId: String,
-    chat: Array
+    chatId: String
 })
 
 const emit = defineEmits(['update:chat'])
 
 const chatStore = useChatStore()
 const message = ref('')
+const textarea = ref(null)
 
 function send() {
     if (message.value.length > 0) {
@@ -23,17 +25,18 @@ function send() {
             props.recipient,
             message.value
         )
-        .then(chat => emit('update:chat', chat.data.messages))
+        message.value = ''
+        textarea.value.resetHeight()
     }
-    message.value = ''
 }
+
 
 </script>
 
 
 <template>
 
-    <div class="controls">
+    <footer class="controls">
 
         <div class="controls__left">
             <div class="controls__icon"> I </div>
@@ -41,21 +44,26 @@ function send() {
         </div>
 
         <div class="controls__middle">
-            <input type="text"
-                ref="input"
-                v-model="message"
-                placeholder="Type a message"
-                @keydown.enter="send"
+            <VueTextArea
+                ref="textarea"
+                placeholder="Message"
+                v-model:text="message"
+                @enter="send"
             >
+            </VueTextArea>
         </div>
 
-        <div class="controls__right" v-if="message">
-
-            <button @click="send"> Send </button>
-
+        <div class="controls__right">
+            <button 
+                @click="send"
+                v-show="message"
+                class="controls__send-btn"
+            > 
+                <i class="material-icons-round"> send </i>
+            </button>
         </div>
 
-    </div>
+    </footer>
 
 </template>
 
@@ -66,32 +74,51 @@ function send() {
 @import "@design";
 
 .controls {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     background-color: var(--surface-default-medium);
     display: flex;
     align-items: center;
-    padding: 10px 0;
     font-size: $text-5;
+    min-height: 60px;
+    padding: 10px 20px;
+}
+
+.controls__left {
+    display: flex;
+    background-color: black;
 }
 
 .controls__middle {
     width: 80%;
     background-color: var(--surface-default-low);
     border-radius: 7px;
-    padding: 13px 14px;
-
-}
-
-
-
-.controls__left {
-    margin-right: 50px;
-    margin-left: 20px;
+    padding: 10px;
     display: flex;
-    background-color: black;
+    align-items: center;
+    margin-left: 50px;
+    margin-right: 20px;
+        
+    @include maxSize(780px) {
+        padding: 8px;
+        width: 80%;
+        margin-left: 20px;
+    }
+
+    @include maxSize(480px) {
+        margin-right: 10px
+    }
 }
 
 .controls__right {
-    margin-left: 10px;
+    width: 20px;
+}
+
+.controls__send-btn {
+    background-color: transparent;
+    border: none;
+    color: white;
 }
 
 </style>

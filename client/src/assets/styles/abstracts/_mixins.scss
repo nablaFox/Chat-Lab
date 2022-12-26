@@ -22,6 +22,10 @@
     bottom: $b
 }
 
-@mixin size($breakpoint) {
+@mixin minSize($breakpoint) {
     @media screen and (min-width: #{$breakpoint}) { @content }
+};
+
+@mixin maxSize($breakpoint) {
+    @media screen and (max-width: #{$breakpoint}) { @content }
 }

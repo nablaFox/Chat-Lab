@@ -79,7 +79,7 @@ const isSender = computed(() => {
 }
 
 .message-container.recipient .message {
-    background-color: yellow;
+    background-color: var(--bg-default-low);
 }
 
 </style>

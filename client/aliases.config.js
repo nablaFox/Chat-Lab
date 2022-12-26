@@ -2,12 +2,13 @@ const path = require('path')
 
 const aliases = {
     '@': 'src',
-    '@components': 'src/components/',
+    '@components': 'src/components',
     '@pages': 'src/pages',
     '@layouts': 'src/router/layouts',
     '@router': 'src/router',
     '@stores': 'src/stores',
-    '@design': 'src/styles/index.scss',
+    '@design': 'src/assets/styles/index.scss',
+    '@plugins': 'node_modules'
 }
 
 Object.keys(aliases).forEach(key => {

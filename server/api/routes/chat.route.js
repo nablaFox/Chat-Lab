@@ -18,7 +18,7 @@ router
 
 router
     .route('/user/:userId')
-    .get(controller.getByUser) // Get a list of all conversations for a specific user
+    .get(checkAuth, controller.getByUser) // Get a list of all conversations for a specific user
     
 router
     .route('/sendMessage')

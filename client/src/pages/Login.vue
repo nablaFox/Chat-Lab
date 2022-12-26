@@ -3,7 +3,7 @@
 import { ref } from 'vue'
 import { useAuthStore } from '@stores/auth'
 
-import Input from '@components/BaseInputText.vue'
+import VueInput from '@components/VueInput.vue'
 
 const auth = useAuthStore()
 
@@ -22,14 +22,14 @@ function onSubmit() {
     <div class="login-wrapper">
 
         <form @submit.prevent="onSubmit">
-            <Input
+            <VueInput
                 id="login__username"
                 label="Username:"
                 v-model:text="username"
                 placeholder="Write the username"
             />
 
-            <Input
+            <VueInput
                 id="login__password"
                 label="Password:"
                 v-model:text="password"
@@ -49,12 +49,12 @@ function onSubmit() {
 <style lang="scss" scoped>
 
 .login-wrapper {
-    width: 800px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin: 0 auto;
+    width: 100%;
+    height: var(--full-vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
 button {

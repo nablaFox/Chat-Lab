@@ -1,4 +1,5 @@
-input {
+input,
+textarea {
     width: 100%;
     border: none;
     background: transparent;
@@ -7,4 +8,10 @@ input {
     -moz-user-select: none;
     outline: none;
     color: inherit;
+    resize: none;
+}
+
+p {
+    margin: 0;
+    padding: 0;
 }

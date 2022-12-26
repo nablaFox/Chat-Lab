@@ -17,7 +17,6 @@ export const useAuthStore = defineStore('auth', () => {
             router.push(`/users/${user.value.user.id}`)
         } catch(error) {
             alert(error)
-            console.log(error)
         }
     }
 

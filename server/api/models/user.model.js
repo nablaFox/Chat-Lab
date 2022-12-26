@@ -40,9 +40,9 @@ userSchema.method({
         const transformed = {}
         const fields = [
             'id', 
-            'username', 
+            'username',
             'password',
-            'email', 
+            'email',
             'bio'
         ]
 
@@ -86,10 +86,11 @@ userSchema.statics = {
         email,
         bio
     }) {
-        const options = omitBy({
-            password, 
-            email, 
-            bio 
+        const options = omitBy({ 
+            username,
+            password,
+            email,
+            bio
         }, isNil)
 
         if (username) {

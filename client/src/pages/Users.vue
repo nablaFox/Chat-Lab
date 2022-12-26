@@ -1,7 +1,7 @@
 <script setup>
 
-import { ref, onMounted, watch, nextTick } from 'vue'
-import { useRoute } from 'vue-router';
+import { ref, onBeforeMount, watch, nextTick } from 'vue'
+import { useRoute } from 'vue-router'
 import { useChatStore } from '@stores/chats'
 import { useUserStore } from '@stores/users'
 import { storeToRefs } from 'pinia'
@@ -60,17 +60,22 @@ watch(chat, () => {
 })
 
 // hooks
-onMounted(() => {
+
+onBeforeMount(() => {
     chatStore.getByUser(route.params.id)
     chatStore.listen(route.params.id)
     userStore.getAll()
+
+    // window.onbeforeunload = () => chatStore.close()
 })
+
 
 </script>
 
 <template>
 
     <div class="wrapper">
+
         <div class="chats-container">
             <UserHeader> </UserHeader>
 
@@ -100,8 +105,9 @@ onMounted(() => {
             </div>
         </div>
 
-
-        <div class="messages-container">
+        <div class="messages-container"
+            :class="{ 'is-open': chatSelected }"
+        >
 
             <template v-if="chatSelected">
                 <UserHeader>
@@ -123,7 +129,6 @@ onMounted(() => {
                     :sender="route.params.id"
                     :recipient="recipient"
                     :chatId="chatId"
-                    v-model:chat="chat.messages"
                 />
                
             </template>
@@ -146,6 +151,7 @@ onMounted(() => {
             </div>
 
         </div>
+
     </div>
 
 
@@ -160,9 +166,9 @@ onMounted(() => {
     display: flex;
     max-width: 1600px;
     margin: 0 auto;
-    height: 100vh;
+    height: var(--full-vh);
 
-    @include size(1441px) { padding: 19px 0 }
+    @include minSize(1441px) { padding: 19px 0 }
 }
 
 .chats-container {
@@ -176,21 +182,44 @@ onMounted(() => {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
+
+    @include maxSize(780px) {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        display: none;
+    }
 }
 
 .messages-wrapper {
     overflow-y: scroll;
     height: 100%;
+    padding-bottom: 60px;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+
+
 }
 
 .messages {
-    padding-top: 50px;
+    padding-top: 20px;
     padding-left: 80px;
     padding-right: 80px;
     background-color: var(--bg-default-high);
     min-height: 100%;
     display: flex;
     flex-direction: column;
+
+    @include maxSize(780px) {
+        padding-right: 10px;
+        padding-left: 10px;
+        padding-top: 20px;
+    }
 }
 
 .default-banner__wrapper {
@@ -209,6 +238,9 @@ onMounted(() => {
     height: 100%;
 }
 
+.is-open {
+    display: flex;
+}
 
 
 </style>

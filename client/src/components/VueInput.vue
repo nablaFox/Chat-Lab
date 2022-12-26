@@ -15,7 +15,7 @@ const props = defineProps({
 
     <div class="input-wrapper">
         <label :for="id"> {{ label }} </label>
-        <input 
+        <input
             type="text"
             :id="id"
             :placeholder="placeholder"

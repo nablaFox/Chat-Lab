@@ -31,7 +31,6 @@ const lastDate = computed(() => {
 
     <div class="chat-box" 
         @click="$emit('select')"
-        :class="{'is-clicked': clicked}"
     >
         <div class="chat-box__pic">
 

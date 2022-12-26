@@ -2,11 +2,9 @@ import { defineStore } from "pinia";
 import { ref } from 'vue'
 import axios from 'axios'
 
-
 export const useUserStore = defineStore('users', () => {
     const users = ref('')
-    const searchedUsers = ref(null)
-    const user = ref('')
+    const searchedUsers = ref('')
 
     async function getAll() {
         const response = await axios.get('http://cathost.ddns.net/users')
@@ -22,29 +20,16 @@ export const useUserStore = defineStore('users', () => {
         searchedUsers.value = response.data
     }
 
-    async function getById(userId) {
-        const response = await axios.get(`http://cathos.ddns.net/users/${userId}`)
-        user.value = response.data;
-    }
-
-
     function getUsername(id) {
-        try {
-            const user = users.value.find(user => user.id == id)
-            return user ? user.username : undefined
-        } catch(err) {
-            
-        }
-        
+        const user = users.value.find(user => user.id == id)
+        return user.username
     }
 
     return { 
         users, 
-        user, 
         searchedUsers, 
         getAll, 
         getByUsername, 
-        getById, 
         getUsername 
     }
  

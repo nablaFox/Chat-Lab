@@ -1,5 +1,4 @@
 const aliases = require('./aliases.config')
-const path = require('path')
 
 import { defineConfig } from 'vite'
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
@@ -17,4 +16,7 @@ export default defineConfig({
         ViteEjsPlugin(),
         vue()
     ],
+    css: {
+        postcss: { path: false }
+    }
 })

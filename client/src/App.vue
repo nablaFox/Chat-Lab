@@ -1,5 +1,16 @@
 <script setup>
 
+import { onMounted } from 'vue';
+
+const resize = () => {
+  document.documentElement.style.setProperty('--full-vh', `${window.innerHeight}px`)
+}
+
+onMounted(() => {
+   resize()
+   window.addEventListener('resize', resize)
+})
+
 
 </script>
 
@@ -21,12 +32,15 @@
 <!-- global styles -->
 <style lang="scss">
 
-@import 'normalize.css/normalize.css';
 @import '@design';
+@import '@plugins/normalize.css';
+@import './assets/styles/themes/dark';
+@import './assets/styles/themes/light';
 
 * {
    box-sizing: border-box;
 }
+
 
 body {
    background-color: var(--bg-default-medium);
