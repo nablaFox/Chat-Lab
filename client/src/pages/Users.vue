@@ -66,7 +66,7 @@ onBeforeMount(() => {
     chatStore.listen(route.params.id)
     userStore.getAll()
 
-    // window.onbeforeunload = () => chatStore.close()
+    window.addEventListener('beforeunload', () => { chatStore.close() })
 })
 
 

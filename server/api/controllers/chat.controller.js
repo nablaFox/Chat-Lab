@@ -8,11 +8,12 @@ const clients = new Map()
 wss.on('connection', (ws, req) => {
     const clientId = req.headers['sec-websocket-protocol']
     clients.set(ws, clientId)
+
+    ws.on('close', () => {
+        clients.delete(ws)
+    })
 })
 
-wss.on('close', (ws) => {
-    clients.delete(ws)
-})
 
 const checkClients = (req, id) => {
     return id === req.body.sender ||
@@ -115,7 +116,6 @@ exports.sendMessage = async (req, res) => {
                 }
             }
         })
-
         res.json(chat)
     } catch(err) {
         res.status(500).send(err);

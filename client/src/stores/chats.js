@@ -21,6 +21,7 @@ function checkAuth(err) {
 export const useChatStore = defineStore('chats', () => {
     const chats = ref('')
     const chat = ref('')
+    const ws = ref(null)
 
     async function getByUser(userId) {
         try {
@@ -29,7 +30,7 @@ export const useChatStore = defineStore('chats', () => {
             })
             chats.value = response.data
         } catch(err) {
-            console.log('getByUser error')
+            console.error('getByUser error: ' + err)
             checkAuth(err)
         }
     }
@@ -71,13 +72,13 @@ export const useChatStore = defineStore('chats', () => {
                 headers: authHeader
             })
         }
-        catch(err) { console.log(err) }
+        catch(err) { console.err('sendMessage error: ' + err) }
     }
 
     function listen(userId) {
-        const ws = new WebSocket('ws://cathost.ddns.net/ws', userId)
+        ws.value = new WebSocket('ws://cathost.ddns.net/ws', userId)
 
-        ws.onmessage = (event) => {
+        ws.value.onmessage = (event) => {
             if (event.data != 'updateChats') {
                 chat.value = JSON.parse(event.data)
             }
@@ -85,14 +86,17 @@ export const useChatStore = defineStore('chats', () => {
         }
     }
 
+    function close() { ws.value.close() }
+
     return {
         chats,
         chat,
         getByUser,
         getById,
         start,
+        sendMessage,
         listen,
-        sendMessage
+        close
     }
 })
 

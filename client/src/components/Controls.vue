@@ -81,8 +81,8 @@ function send() {
     display: flex;
     align-items: center;
     font-size: $text-5;
-    min-height: 60px;
     padding: 10px 20px;
+    height: 60px;
 }
 
 .controls__left {
@@ -119,6 +119,7 @@ function send() {
     background-color: transparent;
     border: none;
     color: white;
+    cursor: pointer;
 }
 
 </style>
