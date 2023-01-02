@@ -8,12 +8,6 @@ export default [
         meta: { layout: MainLayout }
     },
     {
-        path: '/users/:id',
-        name: 'users',
-        component: () => import('@pages/Users.vue'),
-        meta: { layout: MainLayout }
-    },
-    {
         path: '/login',
         name: 'login',
         component: () => import('@pages/Login.vue'),
@@ -22,7 +16,13 @@ export default [
     {
         path: '/register',
         name: 'register',
-        component: () => import('@pages/SignUp.vue'),
+        component: () => import('@pages/Register.vue'),
+        meta: { layout: MainLayout }
+    },
+    {
+        path: '/users/:id',
+        name: 'users',
+        component: () => import('@pages/Users.vue'),
         meta: { layout: MainLayout }
     },
 ]

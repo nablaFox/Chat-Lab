@@ -1,5 +1,7 @@
 <script setup>
 
+import IconButton from '@components/IconButton.vue'
+
 </script>
 
 
@@ -7,16 +9,7 @@
 
     <div class="home">
 
-        <div class="hero">
-            <div class="hero__link">
-                <router-link to="/login" class="header__item"> Login </router-link>
-            </div>
-
-            <div class="hero__link">
-                <router-link to="/register" class="header__item"> Register </router-link>
-            </div>
-        </div>
-
+        <IconButton />
 
     </div>
 
@@ -25,15 +18,11 @@
 
 <style lang="scss" scoped>
 
-.hero {
-    height: 100vh;
+.home {
+    height: var(--full-vh);
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.hero__link {
-    padding: 20px;
 }
 
 

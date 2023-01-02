@@ -1,5 +1,3 @@
 <template>
-
-    App
     
 </template>

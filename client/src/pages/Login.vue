@@ -3,8 +3,6 @@
 import { ref } from 'vue'
 import { useAuthStore } from '@stores/auth'
 
-import VueInput from '@components/VueInput.vue'
-
 const auth = useAuthStore()
 
 const username = ref('')
@@ -22,17 +20,17 @@ function onSubmit() {
     <div class="login-wrapper">
 
         <form @submit.prevent="onSubmit">
-            <VueInput
+            <input
                 id="login__username"
                 label="Username:"
-                v-model:text="username"
+                v-model="username"
                 placeholder="Write the username"
             />
 
-            <VueInput
+            <input
                 id="login__password"
                 label="Password:"
-                v-model:text="password"
+                v-model="password"
                 placeholder="Write the username"
             />
 
@@ -60,5 +58,7 @@ function onSubmit() {
 button {
     margin-top: 30px;
 }
+
+input { display: block; }
 
 </style>

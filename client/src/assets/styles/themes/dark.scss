@@ -1,0 +1,45 @@
+:root.dark {
+    --md-sys-color-primary: #{palette-color('primary', 80)};
+    --md-sys-color-on-primary: #{palette-color('primary', 20)};
+    --md-sys-color-primary-container: #{palette-color('primary', 30)};
+    --md-sys-color-on-primary-container: #{palette-color('primary', 90)};
+    --md-sys-color-secondary: #{palette-color('secondary', 80)};
+    --md-sys-color-on-secondary: #{palette-color('secondary', 20)};
+    --md-sys-color-secondary-container: #{palette-color('secondary', 30)};
+    --md-sys-color-on-secondary-container: #{palette-color('secondary', 90)};
+    --md-sys-color-tertiary: #{palette-color('tertiary', 80)};
+    --md-sys-color-on-tertiary: #{palette-color('tertiary', 20)};
+    --md-sys-color-tertiary-container: #{palette-color('tertiary', 30)};
+    --md-sys-color-on-tertiary-container: #{palette-color('tertiary', 90)};
+    --md-sys-color-error: #{palette-color('error', 80)};
+    --md-sys-color-on-error: #{palette-color('error', 20)};
+    --md-sys-color-error-container: #{palette-color('error',30)};
+    --md-sys-color-on-error-container: #{palette-color('error', 90)};
+
+    --md-sys-color-background: #{palette-color('neutral', 10)};
+    --md-sys-color-on-background: #{palette-color('neutral', 90)};
+
+    --md-sys-color-surface: #{palette-color('neutral', 10)};
+    --md-sys-color-on-surface: #{palette-color('neutral', 90)};
+    --md-sys-color-surface-variant: #{palette-color('neutral-variant', 30)};
+    --md-sys-color-on-surface-variant: #{palette-color('neutral-variant', 80)};
+
+    --md-sys-color-outline: #{palette-color('neutral-variant', 60)};
+    --md-sys-color-outline-variant: #{palette-color('neutral-variant', 30)};
+
+    --md-sys-color-inverse-surface: #{palette-color('neutral', 90)};
+    --md-sys-color-inverse-on-surface: #{palette-color('neutral', 10)};
+    --md-sys-color-inverse-primary: #{palette-color('neutral', 40)};
+
+    --md-sys-color-shadow: #{palette-color('neutral', 0)};
+
+    --md-sys-color-surface-tint: #{palette-color('primary', 80)};
+
+    --md-sys-color-scrim: #{palette-color('neutral', 0)};
+
+    --md-sys-color-surface1: #{surface('dark', 95%)};
+    --md-sys-color-surface2: #{surface('dark', 92%)};
+    --md-sys-color-surface3: #{surface('dark', 89%)};
+    --md-sys-color-surface4: #{surface('dark', 88%)};
+    --md-sys-color-surface5: #{surface('dark', 86%)};
+}
