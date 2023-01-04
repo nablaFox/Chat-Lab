@@ -1,0 +1,15 @@
+.state-layer {
+    position: relative;
+    cursor: pointer;
+    @include flex();
+
+    &:hover::before { opacity: 0.08 }
+    &:focus::before { opacity: 12% }
+    &:active::before { opacity: 12% }
+}
+
+.state-layer::before {
+    @include pseudo-normalize();
+    background-color: currentColor;
+    opacity: 0;
+}

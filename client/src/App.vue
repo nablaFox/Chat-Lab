@@ -36,6 +36,8 @@ onMounted(() => {
 @import '@plugins/normalize.css';
 @import './assets/styles/themes/dark.scss';
 @import './assets/styles/themes/light.scss';
+@import './assets/styles/reset.scss';
+@import './assets/styles/global.scss';
 
 body {
    background-color: var(--md-sys-color-background);
