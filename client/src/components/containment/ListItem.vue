@@ -37,7 +37,6 @@ const Variant = computed(function() {
         :class="[Variant, { 'has-divider': divider }]"
         class="list-item state-layer"
     >
-
         <div 
             class="list-item__leading"
             v-if="$slots.leading"
@@ -149,5 +148,9 @@ const Variant = computed(function() {
     color: var(--md-sys-color-on-surface-variant)
 }
 
+.list-item__leading,
+.list-item__trailing {
+    @include flex()
+}
 
 </style>

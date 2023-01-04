@@ -27,17 +27,15 @@ const isExtended = computed(() => {
 <template>
 
     <button 
-        class="fab"
+        class="fab state-layer"
         :class="[variant, size]"
     >
-        <span class="state-layer">
-            <span
-                class="material-icons-outlined fab__icon"
-            >
-                {{ icon }}
-            </span>
-            <label class="fab__label" v-if="isExtended"> {{ label }} </label>
+        <span
+            class="material-icons-outlined fab__icon"
+        >
+            {{ icon }}
         </span>
+        <label class="fab__label" v-if="isExtended"> {{ label }} </label>
     </button>
 
 </template>
@@ -54,7 +52,7 @@ const isExtended = computed(() => {
     background-color: var(--md-sys-color-surface3);
     color: var(--md-sys-color-primary);
 
-    .state-layer { padding: 16px }
+    padding: 16px;
 
     &.primary {
         color: var(--md-sys-color-on-primary-container);
@@ -73,15 +71,15 @@ const isExtended = computed(() => {
 
     &.small {
         border-radius: $medium-rounded;
-        .state-layer { padding: 8px }
+        padding: 8px;
     }
 
     &.large {
-        .state-layer { padding: 30px }
+        padding: 30px;
         .fab__icon { font-size: 36px }
     }
 
-    &.extended .state-layer {
+    &.extended {
         padding: 16px 20px 16px 16px;
         gap: 12px;
     }

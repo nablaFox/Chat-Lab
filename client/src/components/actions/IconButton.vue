@@ -31,7 +31,7 @@ function onClick() {
     
     <div class="icon-btn__container">
         <button
-            class="icon-btn"
+            class="icon-btn state-layer"
             :class="
                 { 'toggleable': toggleable },
                 { 'selected': selected },
@@ -40,7 +40,6 @@ function onClick() {
             @click="onClick"
         >
             <span
-                class="state-layer"
                 :class="[selected ? 'material-icons' : 'material-icons-outlined']"
             >
                 {{ icon }}
@@ -68,7 +67,7 @@ function onClick() {
     border-radius: $full-rounded;
     overflow: hidden;
     color: var(--md-sys-color-on-surface-variant);
-    .state-layer { padding: 8px }
+    padding: 8px;
 
     &.filled {
         color: var(--md-sys-color-on-primary);

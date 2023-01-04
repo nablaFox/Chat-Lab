@@ -12,10 +12,11 @@ defineProps({
     trailingIcon: {
         type: String,
         default: 'search'
-    }
+    },
+    text: String
 })
 
-defineEmits(['leadingClick', 'trailingClick'])
+defineEmits(['leadingClick', 'trailingClick', 'update:text'])
 
 </script>
 
@@ -37,6 +38,8 @@ defineEmits(['leadingClick', 'trailingClick'])
             class="search__input"
             type="text" 
             :placeholder="placeholder"
+            :value="text"
+            @input="$emit('update:text', $event.target.value)"
         >
 
         <div class="search__trailing">
