@@ -3,40 +3,55 @@
 import { computed } from 'vue'
 
 const props = defineProps({
+    as: { type: String, default: 'button'},
     icon: String,
     label: String,
+    href: String,
     size: {
         type: String,
-        validators: value =>
+        validator: value =>
             ['small', 'large', 'extended'].includes(value)
     },
     variant: {
-        type: String,
-        validators: value =>
-            ['primary', 'tertiary', 'secondary'].includes(value)
-    },
+        validator(value) {
+            return ['primary', 'tertiary', 'secondary'].includes(value) 
+        }
+    }
 })
 
-const isExtended = computed(() => {
-    return props.size === 'extended' ? true : false;
-})
+const isRegularLink = computed(() => props.as === 'a')
+const isRouterLink = computed(() => props.as === 'router-link')
+const isExtended = computed(() => props.size === 'extended')
 
 </script>
 
 
 <template>
 
-    <button 
+    <component
+        :is="as"
         class="fab state-layer"
-        :class="[variant, size]"
+        :class="[
+            variant, 
+            size, 
+            isExtended && 'extended'
+        ]"
+        :href="isRegularLink && href"
+        :to="isRouterLink && href"
     >
         <span
             class="material-icons-outlined fab__icon"
         >
             {{ icon }}
         </span>
-        <label class="fab__label" v-if="isExtended"> {{ label }} </label>
-    </button>
+        
+        <div 
+            class="fab__label"
+            v-if="isExtended"
+        >
+            {{ label }}
+        </div>
+    </component>
 
 </template>
 
@@ -51,8 +66,8 @@ const isExtended = computed(() => {
     border-radius: $large-rounded;
     background-color: var(--md-sys-color-surface3);
     color: var(--md-sys-color-primary);
-
     padding: 16px;
+    @extend %label-large;
 
     &.primary {
         color: var(--md-sys-color-on-primary-container);
@@ -84,7 +99,5 @@ const isExtended = computed(() => {
         gap: 12px;
     }
 }
-
-.fab__label { @extend %label-large }
 
 </style>

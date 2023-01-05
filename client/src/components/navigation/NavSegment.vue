@@ -3,7 +3,7 @@
 const props = defineProps({
     icon: String,
     label: String,
-    isCircular: Boolean
+    circular: Boolean
 })
 
 defineEmits(['select'])
@@ -11,27 +11,28 @@ defineEmits(['select'])
 </script>
 
 
-
 <template>
 
     <div class="segment">
         <button
-            :class="{ circular: isCircular }"
-            class="segment__btn"
+            :class="{ circular: circular }"
+            class="segment__btn state-layer"
             @click="$emit('select')"
         >
-            <span class="material-icons state-layer">
+            <span class="material-icons">
                 {{ icon }}
             </span>
         </button>
 
-        <label class="segment__label" v-if="label && !isCircular">
+        <div 
+            class="segment__label" 
+            v-if="label && !circular"
+        >
             {{ label }}
-        </label>
+        </div>
     </div>
 
 </template>
-
 
 
 <style lang="scss" scoped>
@@ -46,22 +47,19 @@ defineEmits(['select'])
 .segment__btn {
     overflow: hidden;
     border-radius: $large-rounded;
-    .state-layer { padding: 4px 20px }
+    padding: 4px 20px;
 
     &.circular {
         border-radius: $full-rounded;
-        .state-layer { padding: 16px }
+        padding: 16px;
     }
 }
 
-.segment__label {
-    @extend %label-medium
-}
+.segment__label { @extend %label-medium }
 
 .active .segment__btn {
    background-color: var(--md-sys-color-secondary-container);
    color: var(--md-sys-color-on-secondary-container);
 }
-
 
 </style>

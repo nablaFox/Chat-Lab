@@ -80,7 +80,7 @@ const destinations = [
                 :key="dest.id"
                 :label="dest.label"
                 :icon="dest.icon"
-                :isCircular="dest.circular"
+                :circular="dest.circular"
                 :class="{ active: selected === dest.id }"
                 @select="selected = dest.id"
             />

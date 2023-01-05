@@ -31,37 +31,18 @@ function test1() {
     alert('ok1')
 }
 
-const sel = ref(true)
-
-
-const items = [
-    { label: 'item1', leadIcon: 'visibility', id: 1 },
-    { label: 'item2', leadIcon: 'content_copy', trailText: 'C', id: 2 },
-    { label: 'item3', leadIcon: 'edit', trailIcon: 'done', divider: true, id: 3 },
-    { label: 'item4', leadIcon: 'cloud', trailIcon: 'arrow_right', id: 4 },
-]
-
 </script>
 
 
 <template>
 
     <div class="home">
-
-        <MdMenu
-            :items="items"
-            :control="{
-                type: 'button',
-                text: 'Activated',
-                variant: 'tonal'
-            }"
-        />
-
-        <input class="test" type="checkbox" @change="toggleTheme">
-
+        
+        
     </div>
 
 
+    
 
 
 </template>
@@ -74,8 +55,7 @@ const items = [
 .home {
     height: var(--full-vh);
     @include flex($direction: column);
-    gap: 20px;
-
+    gap: 24px;
 }
 
 .test {

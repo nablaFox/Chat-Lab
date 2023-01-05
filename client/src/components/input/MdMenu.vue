@@ -1,14 +1,19 @@
+<!-- add transition, drop selection -->
+
 <script setup>
 
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 import ListItem from '@components/containment/ListItem.vue'
 import IconButton from '@components/actions/IconButton.vue'
 import MdButton from '@components/actions/MdButton.vue'
 
-defineProps({
+const props = defineProps({
     items: Array,
-    control: Object
+    control: String,
+    icon: String,
+    label: String,
+    variant: String
 })
 const emit = defineEmits(['open', 'close'])
 
@@ -21,37 +26,33 @@ function onChange() {
     else { emit('close') }
 }
 
+const Control = computed(() => {
+    if (props.control === 'button') { 
+        return MdButton
+    }
+    else if (props.control === 'icon-button') {
+        return IconButton
+    }
+})
+
 </script>
 
 
 <template>
 
-    
     <div class="menu__container">
 
         <div class="menu__control">
-            <IconButton
-                v-if="control.type === 'icon-button'"
-                :icon="control.icon"
-                @change="onChange"
+            <component
+                :is="Control"
+                :icon="icon"
+                :label="label"
+                :variant="variant"
                 toggleable
-            />
-            <MdButton
-                v-else-if="control.type === 'button'"
-                :variant="control.variant"
-                :text="control.text"
-                :icon="control.icon"
                 @click="onChange"
             />
-            <!-- 
-                <MdSelection
-                    v-else-if="control.type === 'selection'"
-                    v-bind="control.spec"
-                />
-            -->
         </div>
 
-        <!-- add transition -->
         <div class="menu" v-if="open">
             <ListItem
                 v-for="item in items"
@@ -70,7 +71,6 @@ function onChange() {
             </ListItem>
         </div>
 
-
     </div>
 
 </template>
@@ -87,7 +87,6 @@ function onChange() {
     min-width: 112px;
     max-width: 280px;
     width: 300px;
-    z-index: 9999;
 }
 
 .menu {
@@ -110,17 +109,14 @@ function onChange() {
     gap: 12px;
 }
 
-.state-layer {
-    &:hover::before { opacity: 0 }
-    &:active::before { opacity: 12% }
+.menu__control {
+    padding-bottom: 5px;
 }
 
 :deep(.icon-btn.selected) {
     background-color: var(--md-sys-color-surface2);
 }
 
-.icon-btn__container {
-    margin-left: auto;
-}
+.icon-btn { margin-left: auto }
 
 </style>

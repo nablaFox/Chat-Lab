@@ -1,3 +1,5 @@
+<!-- modify padding on large images -->
+
 <script setup>
 
 import { useSlots, computed } from 'vue';
@@ -12,7 +14,7 @@ const props = defineProps({
     variant: String,
 })
 
-const Variant = computed(function() {
+const Variant = computed(() => {
     if (props.variant) {
         return props.variant
     }
@@ -27,7 +29,6 @@ const Variant = computed(function() {
     }
 })
 
-// modify padding on large images
 </script>
 
 

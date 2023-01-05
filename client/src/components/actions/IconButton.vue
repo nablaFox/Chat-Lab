@@ -1,3 +1,5 @@
+<!-- add disabled style -->
+
 <script setup>
 
 import { ref } from 'vue'
@@ -29,23 +31,21 @@ function onClick() {
 
 <template>
     
-    <div class="icon-btn__container">
-        <button
-            class="icon-btn state-layer"
-            :class="
-                { 'toggleable': toggleable },
-                { 'selected': selected },
-                variant
-            "
-            @click="onClick"
+    <button
+        class="icon-btn state-layer"
+        :class="
+            { 'toggleable': toggleable },
+            { 'selected': selected },
+            variant
+        "
+        @click="onClick"
+    >
+        <span
+            :class="[selected ? 'material-icons' : 'material-icons-outlined']"
         >
-            <span
-                :class="[selected ? 'material-icons' : 'material-icons-outlined']"
-            >
-                {{ icon }}
-            </span>
-        </button>
-    </div>
+            {{ icon }}
+        </span>
+    </button>
 
 </template>
 
@@ -55,15 +55,10 @@ function onClick() {
 
 @import "@design";
 
-.icon-btn__container {
+.icon-btn {
     @include flex();
     width: 48px;
     aspect-ratio: 1;
-}
-
-// aggiungere la variante disabled
-
-.icon-btn {
     border-radius: $full-rounded;
     overflow: hidden;
     color: var(--md-sys-color-on-surface-variant);
