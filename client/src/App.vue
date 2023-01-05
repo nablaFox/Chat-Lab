@@ -39,14 +39,4 @@ onMounted(() => {
 @import './assets/styles/reset.scss';
 @import './assets/styles/global.scss';
 
-body {
-   background-color: var(--md-sys-color-background);
-   color: var(--md-sys-color-on-surface);
-   @extend %body-large;
-}
-
-* {
-   box-sizing: border-box;
-}
-
 </style>

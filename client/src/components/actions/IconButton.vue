@@ -2,7 +2,7 @@
 
 <script setup>
 
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const props = defineProps({
     icon: String,
@@ -11,12 +11,24 @@ const props = defineProps({
         validators: value =>
             ['filled', 'outlined', 'tonal'].includes(value)
     },
-    toggleable: Boolean
+    toggleable: Boolean,
+    iconVariant: String
 })
-
 const emit = defineEmits(['change'])
 
+
 const selected = ref(false)
+
+const IconVariant = computed(() => {
+    if (selected.value) {
+        return 'material-icons'
+    } else if (props.iconVariant) {
+        return `material-icons-${props.iconVariant}`
+    } else {
+        return 'material-icons-outlined'
+    }
+})
+
 
 function onClick() {
     if (props.toggleable) {
@@ -26,7 +38,6 @@ function onClick() {
 }
 
 </script>
-
 
 
 <template>
@@ -41,7 +52,7 @@ function onClick() {
         @click="onClick"
     >
         <span
-            :class="[selected ? 'material-icons' : 'material-icons-outlined']"
+            :class="IconVariant"
         >
             {{ icon }}
         </span>
@@ -50,15 +61,13 @@ function onClick() {
 </template>
 
 
-
 <style lang="scss" scoped>
 
 @import "@design";
 
 .icon-btn {
     @include flex();
-    width: 48px;
-    aspect-ratio: 1;
+
     border-radius: $full-rounded;
     overflow: hidden;
     color: var(--md-sys-color-on-surface-variant);

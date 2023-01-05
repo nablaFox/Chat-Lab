@@ -6,10 +6,11 @@ button {
     color: inherit;
 }
 
-input[type="text"] {
-    outline: unset;
+input[type="text"],
+textarea {
+    outline: none;
     background-color: unset;
-    border: unset;
+    border: none;
     color: inherit;
     width: 100%;
 }

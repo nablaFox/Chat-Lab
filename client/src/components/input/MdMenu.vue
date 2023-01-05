@@ -61,12 +61,12 @@ const Control = computed(() => {
                 :divider="item.divider"
                 :tabindex="item.id"
             >
-                <template #leading>
+                <template #leading v-if="item.leadIcon">
                     <span class="material-icons-outlined"> {{ item.leadIcon }} </span>
                 </template>
 
-                <template #trailing>
-                    <span class="material-icons-outlined"> {{ item.trailIcon}} </span>
+                <template #trailing v-if="item.trailIcon">
+                    <span class="material-icons-outlined"> {{ item.trailIcon }} </span>
                 </template>
             </ListItem>
         </div>
@@ -83,21 +83,22 @@ const Control = computed(() => {
 @import "@design";
 
 .menu__container {
-    position: relative;
-    min-width: 112px;
-    max-width: 280px;
-    width: 300px;
+    position: relative;;
 }
 
 .menu {
     @include flex($direction: column, $align: start);
     gap: 1px;
-    width: 100%;
     border-radius: $small-rounded;
     background-color: var(--md-sys-color-surface2);
     box-shadow: var(--md-sys-elevation2);
     overflow: hidden;
     position: absolute;
+    width: fit-content;
+    right: 0;
+    min-width: 112px;
+    max-width: 280px;
+    white-space: nowrap;
 }
 
 .menu > .list-item {

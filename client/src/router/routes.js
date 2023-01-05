@@ -20,9 +20,9 @@ export default [
         meta: { layout: MainLayout }
     },
     {
-        path: '/users/:id',
-        name: 'users',
-        component: () => import('@pages/Users.vue'),
+        path: '/user/:id',
+        name: 'user',
+        component: () => import('@pages/User.vue'),
         meta: { layout: MainLayout }
     },
 ]

@@ -10,6 +10,9 @@ import Search from '@components/navigation/Search.vue'
 import ListItem from '@components/containment/ListItem.vue'
 import MdMenu from '@components/input/MdMenu.vue'
 import MdButton from '@components/actions/MdButton.vue'
+import Controls from '@components/chat/ChatControls.vue'
+import Message from '@components/chat/Message.vue'
+import ChatHeader from '@components/chat/ChatHeader.vue'
 
 
 function toggleTheme(e) {
@@ -23,13 +26,8 @@ function toggleTheme(e) {
 
 }
 
-function test() {
-    alert('ok')
-}
 
-function test1() {
-    alert('ok1')
-}
+const msg = ref('')
 
 </script>
 
@@ -37,12 +35,18 @@ function test1() {
 <template>
 
     <div class="home">
+
+
         
-        
+
+        <ChatHeader
+            username="Username"
+        />
+
     </div>
 
 
-    
+    <input type="checkbox" @change="toggleTheme" class="test">
 
 
 </template>
@@ -60,8 +64,7 @@ function test1() {
 
 .test {
     position: absolute;
-    left: 0;
-    bottom: 0;
+    top: 0;
 }
 
 
