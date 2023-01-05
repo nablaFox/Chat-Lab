@@ -20,9 +20,9 @@ export default [
         meta: { layout: MainLayout }
     },
     {
-        path: '/user/:id',
-        name: 'user',
-        component: () => import('@pages/User.vue'),
+        path: '/users/:id/chats',
+        name: 'chats',
+        component: () => import('@pages/Chats.vue'),
         meta: { layout: MainLayout }
     },
 ]

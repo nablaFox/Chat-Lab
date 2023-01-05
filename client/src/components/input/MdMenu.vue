@@ -99,6 +99,7 @@ const Control = computed(() => {
     min-width: 112px;
     max-width: 280px;
     white-space: nowrap;
+    z-index: 9999;
 }
 
 .menu > .list-item {

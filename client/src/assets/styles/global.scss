@@ -9,7 +9,7 @@
     cursor: pointer;
     @include flex();
 
-    &:hover::before { opacity: 0.08 }
+    &:hover::before { opacity: 8% }
     &:active::before { opacity: 12% }
 
     & * {
@@ -21,9 +21,21 @@ body {
     background-color: var(--md-sys-color-background);
     color: var(--md-sys-color-on-surface);
     @extend %body-large;
- }
+}
  
- * {
+* {
     box-sizing: border-box;
 }
 
+h1,
+h2,
+h3,
+h4 {
+    margin: 0;
+    padding: 0;
+}
+
+
+h1 {
+    @extend %headline-large;
+}

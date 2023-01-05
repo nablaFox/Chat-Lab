@@ -6,7 +6,10 @@ import IconButton from '@components/actions/IconButton.vue'
 import Segment from '@components/navigation/NavSegment.vue'
 
 defineProps({
-    fabSpec: Object, // add fabSpec validator
+    fabIcon: String,
+    fabVariant: String,
+    fabSize: String,
+
     destinations: Array,
 
     alignment: {
@@ -21,33 +24,9 @@ defineProps({
         type: Boolean,
         default: true
     }
-
 })
 
 const selected = ref(0)
-
-
-/*
-Usage:
-
-const circular = true;
-
-const destinations = [
-    { label: 'account', icon: 'account_circle', id: 0, circular },
-    { label: 'search', icon: 'search', id: 1, circular },
-    { label: 'settings', icon: 'settings', id: 2, circular },
-    { label: 'mood', icon: 'mood', id: 3, circular }
-]
-
-<NavRail
-    :fabSpec="{ 
-        icon: 'edit',
-        variant: 'tertiary'
-    }"
-    :destinations="destinations"
-    alignment="middle"
-/> 
-*/
 
 </script>
 
@@ -68,8 +47,9 @@ const destinations = [
 
             <div class="nav-rail__fab" v-if="fab">
                 <FAB
-                    :icon="fabSpec.icon"
-                    :variant="fabSpec.variant"
+                    :icon="fabIcon"
+                    :variant="fabVariant"
+                    :size="fabSize"
                 />
             </div>          
         </div>
@@ -85,6 +65,8 @@ const destinations = [
                 @select="selected = dest.id"
             />
         </div>
+
+        <slot></slot>
     </nav>
 
 
@@ -99,9 +81,9 @@ const destinations = [
 .nav-rail {
     background-color: var(--md-sys-surface);
     padding: 44px 0 56px;
-    width: 80px;
 
     @include flex($direction: column, $justify: flex-start);
+    display: inline-flex;
 
     &.top { gap: 40px }
     &.middle { gap: 60px }
@@ -124,6 +106,5 @@ const destinations = [
     gap: 12px;
     padding: 5px 5px;
 }
-
 
 </style>

@@ -47,7 +47,6 @@ function send(e) {
             <IconButton
                 v-if="leadingIcon1"
                 :icon="leadingIcon1"
-                style="font-size: 30px"
             />
             <IconButton
                 v-if="leadingIcon2"
@@ -101,7 +100,7 @@ function send(e) {
     background-color: var(--md-sys-color-surface4);
     display: flex;
     gap: 10px;
-    padding: 25px 10px;
+    padding: 12px 10px;
 }
 
 .chat-controls__left {
@@ -135,6 +134,6 @@ function send(e) {
 }
 
 :deep(.material-icons-outlined),
-:deep(.material-icons-round) { font-size: 32px }
+:deep(.material-icons-round) { font-size: 28px }
 
 </style>

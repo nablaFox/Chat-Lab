@@ -13,6 +13,7 @@ defineProps({
         type: String,
         default: 'search'
     },
+    placeholder: String,
     text: String
 })
 
@@ -43,14 +44,13 @@ defineEmits(['leadingClick', 'trailingClick', 'update:text'])
         >
 
         <div class="search__trailing">
-            <div class="search__trailing-1">
-                <IconButton 
-                    :icon="trailingIcon"
-                    @click="$emit('trailingClick')"
-                />
-            </div>
 
-            <slot name="trailing-2"></slot>
+            <IconButton 
+                :icon="trailingIcon"
+                v-if="trailingIcon"
+                @click="$emit('trailingClick')"
+            />
+
         </div>
     </div>
 
@@ -70,7 +70,7 @@ defineEmits(['leadingClick', 'trailingClick', 'update:text'])
     @include flex();
     padding: 4px;
     gap: 4px;
-    width: 355px;
+    width: 100%;
 }
 
 .search__trailing {

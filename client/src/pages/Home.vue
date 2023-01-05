@@ -15,19 +15,10 @@ import Message from '@components/chat/Message.vue'
 import ChatHeader from '@components/chat/ChatHeader.vue'
 
 
-function toggleTheme(e) {
-    const root = document.documentElement;
-
-    if (e.target.checked) {
-        root.classList.replace('dark', 'light')
-    } else {
-        root.classList.replace('light', 'dark')
-    }
-
-}
-
 
 const msg = ref('')
+
+const selected = ref(0)
 
 </script>
 
@@ -37,16 +28,23 @@ const msg = ref('')
     <div class="home">
 
 
-        
+        <ListItem
+            v-for="n in 3"
+            :class="{ active: selected === n}"
+            @click="selected = n"
+            headline="ciao"
+            
+        />
 
-        <ChatHeader
-            username="Username"
+
+        <MdButton
+            as="router-link"
+            href="/users/1232913/chats"
+            label="User"
         />
 
     </div>
 
-
-    <input type="checkbox" @change="toggleTheme" class="test">
 
 
 </template>
@@ -62,10 +60,6 @@ const msg = ref('')
     gap: 24px;
 }
 
-.test {
-    position: absolute;
-    top: 0;
-}
 
 
 

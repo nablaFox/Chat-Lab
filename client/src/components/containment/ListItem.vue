@@ -12,6 +12,7 @@ const props = defineProps({
     trailText: String,
     divider: Boolean,
     variant: String,
+    round: Boolean
 })
 
 const Variant = computed(() => {
@@ -35,7 +36,11 @@ const Variant = computed(() => {
 <template>
 
     <div
-        :class="[Variant, { 'has-divider': divider }]"
+        :class="[
+            Variant,
+            divider && 'has-divider',
+            round && 'round'
+        ]"
         class="list-item state-layer"
     >
         <div 
@@ -152,6 +157,16 @@ const Variant = computed(() => {
 .list-item__leading,
 .list-item__trailing {
     @include flex()
+}
+
+.round {
+    border-radius: $medium-rounded;
+    overflow: hidden;
+}
+
+.active.state-layer::before {
+    opacity: 12%;
+    background-color: var(--md-sys-color-on-surface);
 }
 
 </style>

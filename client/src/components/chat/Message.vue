@@ -14,19 +14,21 @@ defineProps({
 
 <template>
 
-    <div 
-        class="message"
-        :class="origin"
-    >
-        <div class="message__avatar" v-if="avatar"> <div class="test-avatar"></div> </div>
+    <div class="message__container">
+        <div 
+            class="message"
+            :class="origin"
+        >
+            <div class="message__avatar" v-if="avatar"> <div class="test-avatar"></div> </div>
 
-        <div class="message__content">
-            {{ text }}
-            
-            <div class="message__date">
-                {{ date }}
+            <div class="message__content">
+                {{ text }}
+                
+                <div class="message__date">
+                    {{ date }}
+                </div>
             </div>
-        </div>
+        </div>    
     </div>
 
 </template>
@@ -45,6 +47,7 @@ defineProps({
 
 .message {
     @include flex();
+    display: inline-flex;
     gap: 10px;
 
     &.sender { flex-direction: row-reverse; }
