@@ -97,10 +97,10 @@ function send(e) {
 
 .chat-controls {
     width: 100%;
-    background-color: var(--md-sys-color-surface4);
     display: flex;
     gap: 10px;
-    padding: 12px 10px;
+    padding: 0px 10px;
+    padding-bottom: 10px;
 }
 
 .chat-controls__left {
@@ -110,7 +110,7 @@ function send(e) {
 }
 
 .chat-controls__right {
-    background-color: var(--md-sys-color-surface);
+    background-color: var(--md-sys-color-surface5);
     width: 100%;
     height: fit-content;
     border-radius: $extra-large-rounded;
@@ -127,6 +127,7 @@ function send(e) {
     padding: 8px 0;
     max-height: 200px;
     scrollbar-width: thin;
+    color: var(--md-sys-color-on-surface)
 }
 
 .chat-controls__trailing {
@@ -134,6 +135,6 @@ function send(e) {
 }
 
 :deep(.material-icons-outlined),
-:deep(.material-icons-round) { font-size: 28px }
+:deep(.material-icons-round) { font-size: 26px }
 
 </style>

@@ -28,19 +28,17 @@ const selected = ref(0)
     <div class="home">
 
 
-        <ListItem
-            v-for="n in 3"
-            :class="{ active: selected === n}"
-            @click="selected = n"
-            headline="ciao"
-            
+        <MdButton
+            as="router-link"
+            href="/users/123"
+            label="User"
         />
-
 
         <MdButton
             as="router-link"
-            href="/users/1232913/chats"
-            label="User"
+            href="/login"
+            label="Login"
+            variant="outlined"
         />
 
     </div>

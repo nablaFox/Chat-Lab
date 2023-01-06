@@ -19,13 +19,13 @@ const Variant = computed(() => {
     if (props.variant) {
         return props.variant
     }
-    else if (!(props.overline || slots.suppText)) {
+    else if (!(props.overline || slots.default)) {
         return 'one-line' 
     }
-    else if (props.overline && slots.suppText) {
+    else if (props.overline && slots.default) {
         return 'three-line'
     }
-    else if (props.overline || slots.suppText) {
+    else if (props.overline || slots.default) {
         return 'two-line'
     }
 })
@@ -62,9 +62,9 @@ const Variant = computed(() => {
 
             <div 
                 class="list-item__supporting-text"
-                v-if="$slots.suppText"
+                v-if="$slots.default"
             >
-                <slot name="suppText"> </slot>
+                <slot />
             </div>
 
         </div>

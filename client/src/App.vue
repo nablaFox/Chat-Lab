@@ -43,9 +43,16 @@ provide('theme', {
    <router-view v-slot="{ Component, route }">
       
       <component :is="route.meta.layout">
-         <component :is="route.meta.transition || 'div'">
+
+         <component 
+            :is="route.meta.transition" 
+            v-if="route.meta.transition"
+         >
             <component :is="Component"></component>
          </component>
+
+         <component :is="Component" v-else></component>
+
       </component>
 
    </router-view>

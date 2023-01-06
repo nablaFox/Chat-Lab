@@ -14,11 +14,11 @@ defineProps({
 
 <template>
 
-    <div class="message__container">
-        <div 
-            class="message"
-            :class="origin"
-        >
+    <div 
+        class="message__container"
+        :class="origin"
+    >
+        <div class="message">
             <div class="message__avatar" v-if="avatar"> <div class="test-avatar"></div> </div>
 
             <div class="message__content">
@@ -70,6 +70,7 @@ defineProps({
 }
 
 .sender {
+    align-self: flex-end;
     .message__content { 
         border-radius: 16px 16px 4px 16px;
         background-color: var(--md-sys-color-tertiary-container);

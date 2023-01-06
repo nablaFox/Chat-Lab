@@ -19,7 +19,6 @@ const destinations = [
 <template>
 
     <div class="main-layout">
-        
         <NavRail
             fab-icon="graphic_eq"
             fab-variant="tertiary"
@@ -42,7 +41,7 @@ const destinations = [
             />
         </NavRail> 
         
-        <slot> </slot>
+        <slot />
     </div>
     
 </template>
@@ -50,18 +49,37 @@ const destinations = [
 
 <style lang="scss" scoped>
 
-.main-layout {
-    height: var(--full-vh);
-    display: flex;
+@import "@design";
 
-    :slotted(> div) { width: 100% }
+$normal-ver-spacing: 14px;
+$large-ver-spacing: 24px;
+
+$normal-horiz-spacing: 24px;
+
+.main-layout {
+    display: flex;
+    background-color: var(--md-sys-color-surface1);
+    height: var(--full-vh);
 }
 
 .nav-rail {
     height: 100%;
     gap: 50px;
-    padding: 24px 12px;
+    padding: 0px 12px;
+    padding-bottom: $normal-ver-spacing;
     border-right: 1px solid var(--md-sys-color-outline-variant);
+
+    @include minSize(1400px) { padding-bottom: $large-ver-spacing }
+}
+
+:slotted(div),
+.nav-rail  {
+    padding-top: $normal-ver-spacing!important;
+    @include minSize(1400px) { padding-top: $large-ver-spacing!important }
+}
+
+:slotted(div) {
+    margin: 0 $normal-horiz-spacing;
 }
 
 .toggle_theme-btn { margin-top: auto }

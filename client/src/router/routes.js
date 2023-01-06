@@ -4,7 +4,7 @@ export default [
     {
         path: '/',
         name: 'home',
-        component: () => import('@pages/Home.vue'),
+        component: () => import('@pages/index.vue'),
         meta: { layout: MainLayout }
     },
     {
@@ -20,9 +20,16 @@ export default [
         meta: { layout: MainLayout }
     },
     {
-        path: '/users/:id/chats',
-        name: 'chats',
-        component: () => import('@pages/Chats.vue'),
-        meta: { layout: MainLayout }
+        path: '/users/:id',
+        name: 'user',
+        component: import('@pages/User.vue'),
+        meta: { layout: MainLayout },
+        children: [
+            {
+                name: 'chat',
+                path: ':id',
+                component: import('@components/chat/Chat.vue')
+            }
+        ]
     },
 ]
