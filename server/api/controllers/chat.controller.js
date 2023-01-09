@@ -1,5 +1,6 @@
 const httpStatus = require('http-status')
 const Chat = require('../models/chat.model')
+const User = require('../models/user.model')
 const WebSocket = require('ws');
 
 const wss = new WebSocket.Server({ port: 8000 })
@@ -14,7 +15,8 @@ wss.on('connection', (ws, req) => {
     })
 })
 
-
+// sender and recipient don't make sense; 
+// use partecipants
 const checkClients = (req, id) => {
     return id === req.body.sender ||
             id === req.body.recipient
@@ -46,13 +48,22 @@ exports.create = async (req, res, next) => {
         const chat = new Chat(req.body)
         const savedChat = await chat.save()
 
-        clients.forEach((id, client) => {
+        const user = await User.updateMany({
+            $or: [
+                { '_id': req.body.participants[0] }, 
+                { '_id': req.body.participants[1] }
+            ]
+        }, {
+            $push: { chat: savedChat._id }
+        })
+
+        /* clients.forEach((id, client) => {
             if (client.readyState === WebSocket.OPEN) {
                 if (checkClients(req, id)) { 
                     client.send('updateChats')
                 }
             }
-        })
+        }) */
 
         res.status(httpStatus.CREATED)
         res.json(savedChat.transform())
@@ -77,6 +88,8 @@ exports.getByUser = async (req, res, next) => {
         const chats = await Chat.find({
             participants: req.params.userId
         })
+        .populate('participants', 'username bio')
+        
         const transformedChats = chats.map(chat => chat.transform())
         res.json(transformedChats)
     } catch(err) {
@@ -86,6 +99,7 @@ exports.getByUser = async (req, res, next) => {
 
 exports.sendMessage = async (req, res) => {
     try {
+        // save the message in the database
         const chat = await Chat.findByIdAndUpdate(
             req.body.chatId,
             {
@@ -100,6 +114,7 @@ exports.sendMessage = async (req, res) => {
             { new: true }
         )
 
+        // send update to clients
         clients.forEach((id, client) => {
             if (client.readyState === WebSocket.OPEN) {
                 if (checkClients(req, id)) { 
@@ -108,14 +123,6 @@ exports.sendMessage = async (req, res) => {
             }
         })
 
-        wss.clients.forEach(client => {
-            if (client.readyState === WebSocket.OPEN) {
-                if (checkClients(req, client)) { 
-                    client.send(JSON.stringify(chat))
-
-                }
-            }
-        })
         res.json(chat)
     } catch(err) {
         res.status(500).send(err);

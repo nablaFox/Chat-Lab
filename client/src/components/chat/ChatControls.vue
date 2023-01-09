@@ -12,7 +12,7 @@ const props = defineProps({
     trailingIcon2: String,
     placeholder: {type: String, default: 'Aa'},
 })
-const emit = defineEmits(['update:message', 'send'])
+const emit = defineEmits(['send'])
 
 const textarea = ref(null)
 const message = ref('')

@@ -14,11 +14,20 @@ import Controls from '@components/chat/ChatControls.vue'
 import Message from '@components/chat/Message.vue'
 import ChatHeader from '@components/chat/ChatHeader.vue'
 
+import { useChatStore } from '@stores/chats'
+
+const chatStore = useChatStore()
 
 
-const msg = ref('')
+const me = '639f5c843501a6439491a4f6'
 
-const selected = ref(0)
+
+const recipient = ref('')
+
+
+function startChat() {
+    chatStore.start(me, recipient.value)
+}
 
 </script>
 
@@ -27,7 +36,7 @@ const selected = ref(0)
 
     <div class="home">
 
-
+ 
         <MdButton
             as="router-link"
             href="/users/123"
@@ -40,6 +49,15 @@ const selected = ref(0)
             label="Login"
             variant="outlined"
         />
+
+
+        <input
+            class="test"
+            type="text"
+            v-model="recipient"
+        >
+
+        <button @click="startChat"> Create </button>
 
     </div>
 
@@ -58,7 +76,9 @@ const selected = ref(0)
     gap: 24px;
 }
 
-
+.test {
+    background-color: var(--md-sys-color-primary-container);
+}
 
 
 </style>

@@ -1,11 +1,28 @@
 <script setup>
 
-import { ref, onMounted } from 'vue'
+import { ref, onBeforeMount } from 'vue'
+import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useChatStore } from '@stores/chats'
+
+
 import Controls from '@components/chat/ChatControls.vue'
 import ChatHeader from '@components/chat/ChatHeader.vue' 
 import Message from '@components/chat/Message.vue'
 
+const route = useRoute()
+const chatStore = useChatStore()
 
+const { chat } = storeToRefs(chatStore)
+
+function onSend(message) {
+
+
+}   
+
+onBeforeMount(() => {
+    chatStore.get(route.params.chat)
+})
 
 </script>
 
@@ -15,19 +32,19 @@ import Message from '@components/chat/Message.vue'
     <div class="chat">
         <ChatHeader username="Username"/>
         <div class="chat__wrapper" id="test">
+
             <Message
-                v-for="n in 10"
-                origin="recipient"
-                text="Hello world"
+                v-for="msg in chat.messages"
+                :origin="msg.sender === route.params.id ? 'sender' : 'recipient'"
+                :text="msg.text"
                 date="13:50"
             />
-            <Message
-                v-for="n in 10"
-                origin="sender"
-                text="Hello world"
-            />
+            
         </div>
-        <Controls leading-icon-2="add_circle"/>
+        <Controls 
+            leading-icon-2="add_circle"
+            @send="onSend"
+        />
     </div>
 
 
@@ -40,7 +57,7 @@ import Message from '@components/chat/Message.vue'
 
 .chat {
     background-color: var(--md-sys-color-surface);
-    border-radius: $large-rounded;
+    border-radius: $large-top-rounded;
     @include flex($direction: column, $justify: start);
     height: 100%;
     overflow: hidden;

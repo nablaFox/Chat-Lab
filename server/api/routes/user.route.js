@@ -14,6 +14,6 @@ router
     .route('/:id')
     .get(controller.get) // get a user by id
     .delete(controller.remove) // remove a user by id
-    
 
+    
 module.exports = router;

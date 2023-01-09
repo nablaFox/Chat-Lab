@@ -3,6 +3,7 @@ const { jwtSecret } = require('../../config/vars')
 const User = require('../models/user.model')
 
 module.exports = async (req, res, next) => {
+    // prevent the crash
     const Auth = JSON.parse(req.headers.authorization);
     const token = Auth.accessToken;
     const userId = Auth.userId;

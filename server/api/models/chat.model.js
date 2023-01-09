@@ -3,8 +3,8 @@ const { omitBy, isNil } = require('lodash')
 
 const chatSchema = new mongoose.Schema({
     participants: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
     }],
     messages: [{
         sender: String,
@@ -17,7 +17,7 @@ const chatSchema = new mongoose.Schema({
 chatSchema.pre('save', async function save(next) {
     try {
         if (this.participants[0].equals(this.participants[1])) {
-            throw new Error("Gli utenti non possono avviare una chat con se stessi")
+            throw new Error("Users cannot start a new chat with themselves")
         }
 
         const existingChat = await Chat.findOne({
@@ -25,7 +25,7 @@ chatSchema.pre('save', async function save(next) {
         })
 
         if (existingChat) {
-            throw new Error("Gli utenti hanno già iniziato una chat");
+            throw new Error("The users already have a chat");
         }
 
         next()

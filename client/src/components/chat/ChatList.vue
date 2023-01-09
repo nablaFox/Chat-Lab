@@ -1,7 +1,35 @@
+<!-- notifications -->
+
 <script setup>
+
+import { ref, onBeforeMount } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useRoute, useRouter } from 'vue-router'
+import { useUserStore } from '@stores/users'
 
 import ListItem from '@components/containment/ListItem.vue'
 import Search from '@components/navigation/Search.vue'
+
+const route = useRoute()
+const router = useRouter()
+const userStore = useUserStore()
+
+const { user } = storeToRefs(userStore)
+
+const selected = ref('')
+
+function onClick(chat, contact) {
+    router.push({ name: 'chat', params: { chat: chat } })
+    selected.value = chat
+}
+
+onBeforeMount(() => {
+    /* chatStore.listen(route.params._id)
+    chatStore.getByUser(route.params._id) */
+    selected.value = route.params.chat
+
+    /* window.addEventListener('beforeunload', () => { chatStore.close() }) */
+})
 
 </script>
 
@@ -20,12 +48,15 @@ import Search from '@components/navigation/Search.vue'
 
         <div class="chat-list__wrapper">
             <ListItem
-                v-for="n in 20"
-                headline="Username"
-                :class="n == 1 && 'active'"
+                v-for="chat in user.chat"
+                :key="chat._id"
+                :headline="chat.recipient.username"
+                :trailText="chat.lastMessage.timestamp"
+                :class="selected == chat._id && 'active'"
+                @click="onClick(chat._id, chat.recipient._id)"
                 round
             >
-                Hello world, this message is just for text
+               {{ chat.lastMessage.text }}
             </ListItem>
         </div>
     </div>

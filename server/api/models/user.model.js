@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    chat: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chat'
+    }],
     password: {
         type: String,
         required: true
@@ -41,6 +45,7 @@ userSchema.method({
         const fields = [
             'id', 
             'username',
+            'chat',
             'password',
             'email',
             'bio'
@@ -73,7 +78,7 @@ userSchema.statics = {
     async get(id) {
         let user;
         if (mongoose.Types.ObjectId.isValid(id)) {
-            user = await this.findById(id).exec();
+            user = await this.findById(id);
         }
         if (user) { return user }
         console.log('User does not exist')
@@ -82,12 +87,14 @@ userSchema.statics = {
     list({
         skip = 0, limit = 30,
         username,
+        chat,
         password,
         email,
         bio
     }) {
         const options = omitBy({ 
             username,
+            chat,
             password,
             email,
             bio

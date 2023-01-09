@@ -6,15 +6,17 @@ const router = express.Router()
 
 router.param('id', controller.load)
 
+// admin role
 router
     .route('/')
     .get(controller.list) // get a list of all conversations
     .post(controller.create) // create a new conversation
 
+// user role
 router
     .route('/:id')
-    .get(controller.get) // get a chat by id
-    .delete(controller.remove) // remove a chat by id
+    .get(checkAuth, controller.get) // get a chat by id
+    .delete(checkAuth, controller.remove) // remove a chat by id
 
 router
     .route('/user/:userId')
@@ -22,6 +24,6 @@ router
     
 router
     .route('/sendMessage')
-    .post(checkAuth, controller.sendMessage) // Send a message
+    .post(controller.sendMessage) // Send a message
 
 module.exports = router;

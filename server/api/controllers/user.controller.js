@@ -32,7 +32,19 @@ exports.create = async (req, res, next) => {
     }
 }
 
-exports.get = (req, res) => res.json(req.locals.user.transform())
+exports.get = async (req, res) => {
+    const user = await req.locals.user.populate('chat')
+        .then(user => user.populate('chat.participants', 'username bio'))
+        .then(user => user.transform())
+    
+    user.chat = user.chat.map(chat => ({
+        _id: chat.id,
+        recipient: chat.participants.find(p => p != req.params.id),
+        lastMessage: chat.messages[chat.messages.length - 1]
+    }))
+
+    res.json(user)
+}
 
 exports.remove = (req, res, next) => {
     const { user } = req.locals;

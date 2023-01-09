@@ -22,13 +22,13 @@ export default [
     {
         path: '/users/:id',
         name: 'user',
-        component: import('@pages/User.vue'),
+        component: () => import('@pages/User.vue'),
         meta: { layout: MainLayout },
         children: [
             {
                 name: 'chat',
-                path: ':id',
-                component: import('@components/chat/Chat.vue')
+                path: ':chat',
+                component: () => import('@components/chat/Chat.vue')
             }
         ]
     },
