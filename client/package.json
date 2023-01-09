@@ -2,6 +2,7 @@
   "name": "boilerplate-client",
   "version": "1.0.0",
   "dependencies": {
+    "@vueuse/core": "^9.10.0",
     "axios": "^1.2.1",
     "moment": "^2.29.4",
     "normalize.css": "^8.0.1",
@@ -11,7 +12,7 @@
   },
   "scripts": {
     "build": "webpack --progress --mode=production",
-    "dev": "vite --host 192.168.1.100"
+    "dev": "vite"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.2.0",

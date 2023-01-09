@@ -14,21 +14,6 @@ import Controls from '@components/chat/ChatControls.vue'
 import Message from '@components/chat/Message.vue'
 import ChatHeader from '@components/chat/ChatHeader.vue'
 
-import { useChatStore } from '@stores/chats'
-
-const chatStore = useChatStore()
-
-
-const me = '639f5c843501a6439491a4f6'
-
-
-const recipient = ref('')
-
-
-function startChat() {
-    chatStore.start(me, recipient.value)
-}
-
 </script>
 
 
@@ -36,28 +21,12 @@ function startChat() {
 
     <div class="home">
 
- 
-        <MdButton
-            as="router-link"
-            href="/users/123"
-            label="User"
-        />
-
         <MdButton
             as="router-link"
             href="/login"
             label="Login"
             variant="outlined"
         />
-
-
-        <input
-            class="test"
-            type="text"
-            v-model="recipient"
-        >
-
-        <button @click="startChat"> Create </button>
 
     </div>
 

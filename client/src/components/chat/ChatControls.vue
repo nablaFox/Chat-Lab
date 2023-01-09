@@ -2,7 +2,7 @@
 
 <script setup>
 
-import { ref } from 'vue'
+import { useTextareaAutosize } from '@vueuse/core'
 import IconButton from '@components/actions/IconButton.vue'
 
 const props = defineProps({
@@ -14,25 +14,15 @@ const props = defineProps({
 })
 const emit = defineEmits(['send'])
 
-const textarea = ref(null)
-const message = ref('')
-
-function resize() {
-    const tx = textarea.value;
-    tx.style.height="auto"
-    tx.style.height = `${tx.scrollHeight}px`
-
-    if (tx.scrollHeight >= 200) { 
-        tx.style.overflow = 'scroll'
-    }
-}
+const { textarea, input, triggerResize } = useTextareaAutosize()
 
 function send(e) {
     if (!e.shiftKey) {
         e.preventDefault()
-        emit('send', message.value)
+        emit('send', input.value)
         textarea.value.style.height="auto"
-        message.value = ''
+        input.value = ''
+        setTimeout(triggerResize, 0)
     }
 }
 
@@ -60,13 +50,12 @@ function send(e) {
                 class="textarea"
                 rows="1"
                 :placeholder="placeholder"
-                v-model="message"
-                @input="resize"
+                v-model="input"
                 @keydown.enter="send"
             ></textarea>
 
             <div class="chat-controls__trailing">
-                <template v-if="!message.length">
+                <template v-if="!input">
                     <IconButton
                         v-if="trailingIcon1"
                         :icon="trailingIcon1"

@@ -110,8 +110,7 @@ export const useChatStore = defineStore('chats', () => {
         get,
         listen,
         close,
-        sendMessage,
-        lastMessage
+        sendMessage
     }
 })
 

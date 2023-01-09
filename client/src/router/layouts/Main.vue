@@ -1,11 +1,12 @@
 <script setup>
 
-import { inject } from 'vue'
+import { useDark, useToggle } from '@vueuse/core'
 
 import NavRail from '@components/navigation/NavigationRail.vue'
 import IconButton from '@components/actions/IconButton.vue'
 
-const { darkMode, changeTheme } = inject('theme')
+const isDark = useDark({ valueLight: 'light' })
+const toggleDark = useToggle(isDark)
 
 const destinations = [
     { icon: 'chat_bubble_outline', id: 0, circular: true },
@@ -27,17 +28,9 @@ const destinations = [
             :menu="false"
         >
             <IconButton
-                v-if="darkMode"
                 class="toggle_theme-btn"
-                icon="light_mode"
-                @click="changeTheme"
-            />
-
-            <IconButton
-                v-else
-                class="toggle_theme-btn"
-                icon="dark_mode"
-                @click="changeTheme"
+                :icon="isDark ? 'light_mode' : 'dark_mode'"
+                @click="toggleDark()"
             />
         </NavRail> 
         

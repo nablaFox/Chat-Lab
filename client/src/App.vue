@@ -1,39 +1,8 @@
 <script setup>
 
-import { onMounted, provide, ref } from 'vue';
+import { useFullResize } from '@composables/fullResize';
 
-const resize = () => {
-  document.documentElement.style.setProperty('--full-vh', `${window.innerHeight}px`)
-}
-
-const theme = window.matchMedia('(prefers-color-scheme: dark)').matches
-const darkMode = ref(theme)
-const root = document.documentElement
-
-function changeTheme() {
-   darkMode.value = !darkMode.value
-
-   if (darkMode.value) {
-      root.classList.replace('light', 'dark')
-   } else {
-      root.classList.replace('dark', 'light')
-   }
-}
-
-onMounted(() => {
-   resize()
-   theme ? 
-      root.classList.add('dark')
-      : root.classList.add('light')
-   
-   window.addEventListener('resize', resize)
-})
-
-provide('theme', {
-   darkMode,
-   changeTheme,
-})
-
+useFullResize()
 
 </script>
 
@@ -44,14 +13,14 @@ provide('theme', {
       
       <component :is="route.meta.layout">
 
-         <component 
-            :is="route.meta.transition" 
+         <component
             v-if="route.meta.transition"
+            :is="route.meta.transition" 
          >
             <component :is="Component"></component>
          </component>
 
-         <component :is="Component" v-else></component>
+         <component v-else :is="Component"></component>
 
       </component>
 
