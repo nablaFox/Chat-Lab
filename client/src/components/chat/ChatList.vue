@@ -1,11 +1,12 @@
-<!-- notifications -->
+<!-- notifications, chat rotation -->
 
 <script setup>
 
-import { ref, onBeforeMount } from 'vue'
+import { ref, onBeforeMount, provide } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@stores/users'
+import { useTimestamp } from '../../composables/timestamp'
 
 import ListItem from '@components/containment/ListItem.vue'
 import Search from '@components/navigation/Search.vue'
@@ -18,24 +19,19 @@ const { user } = storeToRefs(userStore)
 
 const selected = ref('')
 
-function onClick(chat, contact) {
+function onClick(chat, recipient) {
     router.push({ name: 'chat', params: { chat: chat } })
     selected.value = chat
 }
 
-onBeforeMount(() => {
-    /* chatStore.listen(route.params._id)
-    chatStore.getByUser(route.params._id) */
-    selected.value = route.params.chat
-
-    /* window.addEventListener('beforeunload', () => { chatStore.close() }) */
-})
+onBeforeMount(() => selected.value = route.params.chat )
 
 </script>
 
 
 <template>
     
+
     <div class="chat-list">
         <div class="chat-list__head">
             <h1 class="chat-list__title"> Conversations </h1>
@@ -51,9 +47,9 @@ onBeforeMount(() => {
                 v-for="chat in user.chat"
                 :key="chat._id"
                 :headline="chat.recipient.username"
-                :trailText="chat.lastMessage.timestamp"
+                :trailText="useTimestamp('date', chat.lastMessage.timestamp)"
                 :class="selected == chat._id && 'active'"
-                @click="onClick(chat._id, chat.recipient._id)"
+                @click="onClick(chat._id)"
                 round
             >
                {{ chat.lastMessage.text }}

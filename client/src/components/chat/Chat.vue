@@ -1,10 +1,11 @@
+<!-- show random empty chats while loading, and transition them -->
+
 <script setup>
 
-import { ref, onBeforeMount } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useChatStore } from '@stores/chats'
-
+import { useTimestamp } from '../../composables/timestamp'
 
 import Controls from '@components/chat/ChatControls.vue'
 import ChatHeader from '@components/chat/ChatHeader.vue' 
@@ -12,40 +13,56 @@ import Message from '@components/chat/Message.vue'
 
 const route = useRoute()
 const chatStore = useChatStore()
-
 const { chat } = storeToRefs(chatStore)
+
+const userId = route.params.id
+const recipient = route.meta.recipient
+const loaded = route.meta.loaded
 
 function onSend(message) {
 
+    chatStore.sendMessage(
+        route.params.chat,
+        route.params.id,
+        message
+    )
+}
 
-}   
-
-onBeforeMount(() => {
-    chatStore.get(route.params.chat)
-})
 
 </script>
 
 
 <template>
 
-    <div class="chat">
-        <ChatHeader username="Username"/>
-        <div class="chat__wrapper" id="test">
 
+
+    <div class="chat">
+        
+        <ChatHeader :username="recipient.username" />
+        
+        <!-- transition -->
+        <div class="chat__wrapper" v-if="loaded">
             <Message
                 v-for="msg in chat.messages"
-                :origin="msg.sender === route.params.id ? 'sender' : 'recipient'"
+                :origin="msg.sender === userId ? 'sender' : 'recipient'"
                 :text="msg.text"
-                date="13:50"
+                :date="useTimestamp('msg', msg.timestamp)"
             />
-            
         </div>
+
+        <div class="chat__wrapper" v-else>
+            <div class="test" style="background-color: red; width: 100%; height: 100%"></div>
+        </div>
+
         <Controls 
             leading-icon-2="add_circle"
             @send="onSend"
         />
+
+
+        
     </div>
+
 
 
 </template>

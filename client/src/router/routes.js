@@ -1,4 +1,29 @@
 import MainLayout from '@layouts/Main.vue'
+import { toRaw, ref } from 'vue'
+import { useUserStore } from '@stores/users'
+import { useChatStore } from '@stores/chats'
+
+
+async function user(to, from, next) {
+    const userStore = useUserStore()
+    await userStore.get(to.params.id)
+    next()
+}
+
+// error handle
+async function chat(to) {
+    const chatStore = useChatStore()
+    const userStore = useUserStore()
+
+    to.meta.loaded.value && (to.meta.loaded.value = false)
+
+    to.meta.recipient.value = toRaw(
+        userStore.user.chat.find(chat => chat._id === to.params.chat)
+    ).recipient
+
+    await chatStore.get(to.params.chat) // if needed
+    to.meta.loaded.value = true
+}
 
 export default [
     {
@@ -22,13 +47,19 @@ export default [
     {
         path: '/users/:id',
         name: 'user',
-        component: () => import('@pages/User.vue'),
         meta: { layout: MainLayout },
+        component: () => import('@pages/User.vue'),
+        beforeEnter: user,
         children: [
             {
                 name: 'chat',
                 path: ':chat',
-                component: () => import('@components/chat/Chat.vue')
+                component: () => import('@components/chat/Chat.vue'),
+                meta: { 
+                    beforeResolve: chat, 
+                    loaded: ref(false),
+                    recipient: ref({})
+                },
             }
         ]
     },

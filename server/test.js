@@ -1,14 +1,16 @@
 const axios = require('axios')
 
-const sender = '639f5d4991f91df2eddc483d'
-const recipient = '63a7307040e6219c0a73a9f0'
-const text = 'hello world'
-const chatId = '63bade087ce2e06a7c5f9eb0'
+const sender = '639f5c843501a6439491a4f6'
+const recipient = '63a247c2b6b65f94d9ef39a1'
+const message = 'first message'
 
-axios.post('http://cathost.ddns.net/chats/sendMessage', {
+
+axios.post('http://cathost.ddns.net/chats', {
     participants: [sender, recipient],
-    sender: sender,
-    recipient: recipient,
-    text: text,
-    chatId: chatId
+    messages: [{
+        sender: sender,
+        text: message,
+        timestamp: new Date()
+    }]
 })
+

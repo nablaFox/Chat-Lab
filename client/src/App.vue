@@ -1,8 +1,8 @@
 <script setup>
 
-import { useFullResize } from '@composables/fullResize';
+import { useResize } from '@composables/resize'
 
-useFullResize()
+useResize()
 
 </script>
 

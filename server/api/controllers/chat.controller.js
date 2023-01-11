@@ -48,7 +48,7 @@ exports.create = async (req, res, next) => {
         const chat = new Chat(req.body)
         const savedChat = await chat.save()
 
-        const user = await User.updateMany({
+        await User.updateMany({
             $or: [
                 { '_id': req.body.participants[0] }, 
                 { '_id': req.body.participants[1] }
@@ -107,7 +107,7 @@ exports.sendMessage = async (req, res) => {
                     messages: {
                         sender: req.body.sender,
                         text: req.body.text,
-                        timestamp: Date.now()
+                        timestamp: new Date()
                     }
                 }
             },

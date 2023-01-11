@@ -35,11 +35,10 @@ exports.create = async (req, res, next) => {
 exports.get = async (req, res) => {
     const user = await req.locals.user.populate('chat')
         .then(user => user.populate('chat.participants', 'username bio'))
-        .then(user => user.transform())
-    
-    user.chat = user.chat.map(chat => ({
+
+    user._doc.chat = user.chat.map(chat => ({
         _id: chat.id,
-        recipient: chat.participants.find(p => p != req.params.id),
+        recipient: chat.participants.find(p => p._id != req.params.id),
         lastMessage: chat.messages[chat.messages.length - 1]
     }))
 

@@ -25,9 +25,10 @@ const items = [
     <header
         class="chat-header"
     >
+        
         <div class="chat-header__left"> 
             <div class="chat-header__profile-photo"></div>
-            {{ username }}
+            {{ username }}            
         </div>
 
         <div class="chat-header__right"> 
@@ -72,5 +73,6 @@ const items = [
 }
 
 .chat-header__right { @include flex(); gap: 5px }
+
 
 </style>

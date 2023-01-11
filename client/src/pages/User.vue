@@ -1,18 +1,7 @@
 <script setup>
 
-    import { ref, onBeforeMount } from 'vue'
-    import { useRoute } from 'vue-router'
-    import { useUserStore } from '@stores/users'
-
     import ChatList from '@components/chat/ChatList.vue'
     import Banner from '@components/chat/Banner.vue'
-    
-    const route = useRoute()
-    const userStore = useUserStore()
-
-    onBeforeMount(() => {
-        userStore.get(route.params.id)
-    })
     
 </script>
 
@@ -21,8 +10,8 @@
 
     <div class="list-detail-layout">
 
-        <ChatList/>
-        <router-view :key="$route.fullPath" />
+        <ChatList />
+        <router-view />
         <Banner v-if="!$route.matched[1]" />
 
     </div>
