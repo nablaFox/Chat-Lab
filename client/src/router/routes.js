@@ -1,5 +1,5 @@
 import MainLayout from '@layouts/Main.vue'
-import { toRaw, ref } from 'vue'
+import { ref } from 'vue'
 import { useUserStore } from '@stores/users'
 import { useChatStore } from '@stores/chats'
 
@@ -10,18 +10,16 @@ async function user(to, from, next) {
     next()
 }
 
-// error handle
 async function chat(to) {
     const chatStore = useChatStore()
-    const userStore = useUserStore()
+    to.meta.loaded.value = false
 
-    to.meta.loaded.value && (to.meta.loaded.value = false)
+    await chatStore.init(to.params.chat) // if needed
 
-    to.meta.recipient.value = toRaw(
-        userStore.user.chat.find(chat => chat._id === to.params.chat)
-    ).recipient
+    to.meta.recipient.value = chatStore.chats[to.params.chat]
+        .participants
+        .find(p => p._id !== to.params.id)
 
-    await chatStore.get(to.params.chat) // if needed
     to.meta.loaded.value = true
 }
 

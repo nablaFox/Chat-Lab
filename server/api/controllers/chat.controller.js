@@ -1,130 +1,79 @@
 const httpStatus = require('http-status')
 const Chat = require('../models/chat.model')
 const User = require('../models/user.model')
-const WebSocket = require('ws');
-
-const wss = new WebSocket.Server({ port: 8000 })
-const clients = new Map()
-
-wss.on('connection', (ws, req) => {
-    const clientId = req.headers['sec-websocket-protocol']
-    clients.set(ws, clientId)
-
-    ws.on('close', () => {
-        clients.delete(ws)
-    })
-})
-
-// sender and recipient don't make sense; 
-// use partecipants
-const checkClients = (req, id) => {
-    return id === req.body.sender ||
-            id === req.body.recipient
-            ? true : false
-}
+const { care } = require('../utils/error')
 
 exports.load = async (req, res, next, id) => {
-    try {
-        const chat = await Chat.get(id)
-        req.locals = { chat }
-        return next()
-    } catch(err) {
-        return next(err)
-    }
+    const [chat, err] = await care(() => Chat.get(id))
+    if (err) { return res.status(httpStatus.NOT_FOUND).send(err) }
+
+    req.locals = { chat }
+    next()
 }
 
-exports.list = async (req, res, next) => {
-    try {
-        const chats = await Chat.list(req.query);
-        const transformedChat = chats.map(chat => chat.transform())
-        res.json(transformedChat)
-    } catch(err) {
-        next(err)
-    }
+exports.list = async (req, res) => {
+    const [chats, err] = await care(() => Chat.list(req.query))
+    if (err) { return res.status(httpStatus.BAD_REQUEST).send(err) }
+
+    const transformedChat = chats.map(chat => chat.transform())
+    res.json(transformedChat)
 }
 
-exports.create = async (req, res, next) => {
-    try {
-        const chat = new Chat(req.body)
-        const savedChat = await chat.save()
+exports.create = async (req, res) => {
+    const chat = new Chat(req.body)
+    const [savedChat, err] = await care(() => chat.save())
+    if (err) { return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err) }
 
-        await User.updateMany({
-            $or: [
-                { '_id': req.body.participants[0] }, 
-                { '_id': req.body.participants[1] }
-            ]
-        }, {
-            $push: { chat: savedChat._id }
-        })
+    await User.updateMany({
+        $or: [
+            { '_id': req.body.participants[0] }, 
+            { '_id': req.body.participants[1] }
+        ]
+    }, { $push: { chat: savedChat._id } })
 
-        /* clients.forEach((id, client) => {
-            if (client.readyState === WebSocket.OPEN) {
-                if (checkClients(req, id)) { 
-                    client.send('updateChats')
-                }
-            }
-        }) */
-
-        res.status(httpStatus.CREATED)
-        res.json(savedChat.transform())
-    } catch(err) {
-        console.log(err)
-        res.status(500).send(err)
-    }
+    res.status(httpStatus.CREATED)
+    res.json(savedChat.transform())
 }
 
-exports.get = (req, res) => res.json(req.locals.chat.transform())
-
-exports.remove = (req, res, next) => {
-    const { chat } = req.locals
-
-    chat.remove()
-        .then(() => res.status(httpStatus.NO_CONTENT).end())
-        .catch((e) => next(e));
-}
-
-exports.getByUser = async (req, res, next) => {
-    try {
-        const chats = await Chat.find({
-            participants: req.params.userId
-        })
+exports.get = async (req, res) => {
+    const chat = await req.locals.chat
         .populate('participants', 'username bio')
-        
-        const transformedChats = chats.map(chat => chat.transform())
-        res.json(transformedChats)
-    } catch(err) {
-        res.status(500).send(err)
-    }
+
+    res.json(chat.transform())
+}
+
+
+exports.remove = async (req, res) => {
+    await req.locals.chat.deleteOne()
+    res.status(httpStatus.NO_CONTENT).end()
 }
 
 exports.sendMessage = async (req, res) => {
-    try {
-        // save the message in the database
-        const chat = await Chat.findByIdAndUpdate(
-            req.body.chatId,
-            {
-                $push: {
-                    messages: {
-                        sender: req.body.sender,
-                        text: req.body.text,
-                        timestamp: new Date()
-                    }
-                }
-            },
-            { new: true }
-        )
+    const { chat } = req.locals
 
-        // send update to clients
-        clients.forEach((id, client) => {
-            if (client.readyState === WebSocket.OPEN) {
-                if (checkClients(req, id)) { 
-                    client.send(JSON.stringify(chat))
-                }
-            }
+    chat.messages.push({
+        sender: req.body.sender,
+        text: req.body.text,
+        timestamp: new Date()
+    })
+
+    const [_, err] = await care(() => chat.save())
+
+    if (err) { return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err) }
+    res.status(httpStatus.OK).end()
+}
+
+
+exports.getByUser = async (req, res) => {
+    const [chats, err] = await care(() =>
+        Chat.find({
+            participants: req.params.userId
         })
+            .populate('participants', 'username bio')
+    )
+    
+    if (err) { return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err) }
 
-        res.json(chat)
-    } catch(err) {
-        res.status(500).send(err);
-    }
+    const transformedChats = chats.map(chat => chat.transform())
+    res.json(transformedChats)
 }

@@ -1,11 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import routes from './routes'
 
-
-function auth() {
-    
-}
-
 const router = createRouter({
     routes,
     history: createWebHashHistory(),
@@ -25,7 +20,6 @@ router.beforeResolve(async (to, from, next) => {
     }
 
     next()
-
 })
 
 export default router

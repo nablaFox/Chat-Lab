@@ -2,7 +2,7 @@
 
 <script setup>
 
-import { ref, onBeforeMount, provide } from 'vue'
+import { ref, onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@stores/users'
@@ -19,7 +19,7 @@ const { user } = storeToRefs(userStore)
 
 const selected = ref('')
 
-function onClick(chat, recipient) {
+function onClick(chat) {
     router.push({ name: 'chat', params: { chat: chat } })
     selected.value = chat
 }
@@ -88,6 +88,8 @@ onBeforeMount(() => selected.value = route.params.chat )
 .list-item {
     background-color: transparent!important;
     width: auto!important;
+
+    &:not(:first-child) { margin-top: 10px }
 }
 
 </style>

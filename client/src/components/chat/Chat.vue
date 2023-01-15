@@ -1,4 +1,5 @@
-<!-- show random empty chats while loading, and transition them -->
+<!-- load messages as chunks, and load them when scrolling -->
+<!-- show random empty messages while chunks load -->
 
 <script setup>
 
@@ -22,7 +23,6 @@ const loaded = route.meta.loaded
 function onSend(message) {
 
     chatStore.sendMessage(
-        route.params.chat,
         route.params.id,
         message
     )
@@ -34,15 +34,12 @@ function onSend(message) {
 
 <template>
 
-
-
     <div class="chat">
-        
         <ChatHeader :username="recipient.username" />
         
-        <!-- transition -->
-        <div class="chat__wrapper" v-if="loaded">
+        <div class="chat__wrapper">
             <Message
+                v-if="loaded"
                 v-for="msg in chat.messages"
                 :origin="msg.sender === userId ? 'sender' : 'recipient'"
                 :text="msg.text"
@@ -50,20 +47,11 @@ function onSend(message) {
             />
         </div>
 
-        <div class="chat__wrapper" v-else>
-            <div class="test" style="background-color: red; width: 100%; height: 100%"></div>
-        </div>
-
         <Controls 
             leading-icon-2="add_circle"
             @send="onSend"
         />
-
-
-        
     </div>
-
-
 
 </template>
 

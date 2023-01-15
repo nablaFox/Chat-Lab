@@ -1,5 +1,7 @@
 const mongoose = require("mongoose")
 const { omitBy, isNil } = require('lodash')
+const User = require('./user.model')
+const { care } = require('../utils/error')
 
 const chatSchema = new mongoose.Schema({
     participants: [{
@@ -13,27 +15,31 @@ const chatSchema = new mongoose.Schema({
     }]
 })
 
-
-chatSchema.pre('save', async function save(next) {
-    try {
+chatSchema.pre('save', async function(next) {
+    const [_, err] = await care(async () => {
         if (this.participants[0].equals(this.participants[1])) {
-            throw new Error("Users cannot start a new chat with themselves")
+            throw "Users cannot start a new chat with themselves"
         }
 
         const existingChat = await Chat.findOne({
             participants: { $all: [this.participants[0], this.participants[1]] }
         })
 
-        if (existingChat) {
-            throw new Error("The users already have a chat");
+        if (existingChat && !this.messages.length) { // pensare ad un altro modo
+            throw "The users already have a chat"
         }
+    }, false)
 
-        next()
-    } catch(err) {
-        next(err)
-    }
+    if (err) { next(err) }
 })
-
+ 
+chatSchema.pre('deleteOne', { document: true, query: false }, async function(next) {
+    await User.updateMany(
+        { chat: this._id }, 
+        { $pull: { chat: this._id } }
+    )
+    next()
+})
 
 chatSchema.method({
     transform() {
@@ -56,13 +62,14 @@ chatSchema.statics = {
     async get(id) {
         let chat;
         if (mongoose.Types.ObjectId.isValid(id)) {
-            chat = await this.findById(id).exec();
+            chat = await this.findById(id)
         }
         if (chat) { return chat }
-        console.log('chat does not exist')
+
+        throw 'chat does not exist'
     },
 
-    list({
+    async list({
         skip = 0, limit = 10,
         participants,
         messages

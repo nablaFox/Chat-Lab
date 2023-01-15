@@ -1,7 +1,7 @@
-import { defineStore } from "pinia";
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { defineStore } from "pinia"
 import axios from 'axios'
-import router from '@router'
+
 
 const token = JSON.stringify(JSON.parse(localStorage.getItem('user')).token)
 const authHeader = {
@@ -9,54 +9,52 @@ const authHeader = {
     'Authorization': token,
 }
 
-function checkAuth(err) {
-    if (
-        err.response === '401'
-        || err.response === '403'
-    ) {
-        router.push('/login')
-    }
-}
 
 export const useChatStore = defineStore('chats', () => {
-    const chat = ref('')
+    const chats = ref({})
+    const chatId = ref('')
 
-    async function start({sender, recipient}) {
+    const chat = computed(() => chats.value[chatId.value])
 
+    async function create(sender, recipient) {
         await axios.post('http://cathost.ddns.net/chats', {
             participants: [sender, recipient]
         })
-        .catch(err => console.error(err))
-        
+            .catch(err => console.error(err.response.data))
     }
 
-    async function get(chatId) {
-        try {
-            const response = await axios.get(`http://cathost.ddns.net/chats/${chatId}`, {
-                headers: authHeader
-            })
-            chat.value = response.data
-        } catch(err) { console.log('getById error') }
+    async function init(id) {
+        chatId.value = id
+        if (chats.value[id]) { return }
+
+        const response = await axios.get(`http://localhost:3000/chats/${id}`, {
+            headers: authHeader
+        })
+            .catch(err => console.error(err.response.data))
+
+        if (!response) { return }
+
+        chats.value[id] = response.data
     }
 
-    async function sendMessage(chatId, sender, text) {
-        try {
-            await axios.post('http://cathost.ddns.net/chats/sendMessage', {
-                sender: sender,
-                text: text,
-                chatId: chatId
-            }, {
-                headers: authHeader
-            })
-        }
-        catch(err) { console.err('sendMessage error: ' + err) }
+    // async function loadMore(page) { }
+
+    async function sendMessage(sender, text) {
+        await axios.post(`http://cathost.ddns.net/chats/${chatId.value}`, {
+            sender: sender,
+            text: text
+        }, {
+            headers: authHeader
+        })
+            .catch(err => console.error(err.response.data))
     }
 
     return {
         chat,
-        start,
-        get,
+        chats,
+        chatId,
+        create,
+        init,
         sendMessage
     }
 })
-
