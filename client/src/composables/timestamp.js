@@ -3,17 +3,28 @@ import calendar from 'dayjs/plugin/calendar'
 
 dayjs.extend(calendar)
 
-export function useTimestamp(type, date) {
+export function useTimestamp(date, type) {
+    if (!date) { return }
+
+    const format = {
+        lastDay: '[Yesterday]',
+        lastWeek: 'dddd',
+        sameElse: 'DD/MM/YYYY'
+    }
 
     if (type == 'msg') {
         return dayjs(date).format('HH:mm')
     } else if (type == 'date') {
         return dayjs(date).calendar(null, {
             sameDay: 'HH:mm',
-            lastDay: '[Yesterday]',
-            lastWeek: 'dddd',
-            sameElse: 'DD/MM/YYYY'
+            ...format
         })
-    } else { return undefined }
-
+    } else if (type == 'divider') {
+        return dayjs(date).calendar(null, {
+            sameDay: '[Today]',
+            ...format
+        })
+    } else {
+        return undefined
+    }
 }

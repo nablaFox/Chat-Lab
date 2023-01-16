@@ -107,4 +107,8 @@ const selected = ref(0)
     padding: 5px 5px;
 }
 
+:deep(.segment__btn) {
+    padding: 12px!important;
+}
+
 </style>

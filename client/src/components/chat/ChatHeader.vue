@@ -25,7 +25,6 @@ const items = [
     <header
         class="chat-header"
     >
-        
         <div class="chat-header__left"> 
             <div class="chat-header__profile-photo"></div>
             {{ username }}            
@@ -52,9 +51,8 @@ const items = [
 @import "@design";
 
 .chat-header {
-    height: 80px;
     @include flex($justify: space-between);
-    padding: 0 24px;
+    padding: 12px 24px;
     width: 100%;
 }
 
@@ -69,7 +67,6 @@ const items = [
     height: 48px;
     background-color: var(--md-sys-color-primary);
     border-radius: $full-rounded;
-
 }
 
 .chat-header__right { @include flex(); gap: 5px }

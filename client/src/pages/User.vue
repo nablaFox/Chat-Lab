@@ -27,7 +27,7 @@
 .list-detail-layout {
     display: flex;
     overflow: hidden;
-    gap: 24px;
+    gap: 20px;
     width: 100%;
     height: 100%;
 }

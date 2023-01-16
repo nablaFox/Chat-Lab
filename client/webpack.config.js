@@ -53,14 +53,6 @@ const conf = {
                 ]
             },
             {
-                test: /\.css$/i,
-                use: [
-                    MiniCssExtractPlugin.loader, 
-                    'css-loader',
-                    'postcss-loader'
-                ]
-            },
-            {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 generator: {
                     filename: 'images/[contenthash][ext]'

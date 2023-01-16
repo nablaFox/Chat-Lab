@@ -3,11 +3,10 @@
 
 <script setup>
 
-import { ref, watch, onUpdated, onMounted, onActivated } from 'vue'
+import { ref, onUpdated } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useChatStore } from '@stores/chats'
-import { useTimestamp } from '../../composables/timestamp'
 
 import Controls from '@components/chat/ChatControls.vue'
 import ChatHeader from '@components/chat/ChatHeader.vue' 
@@ -27,16 +26,9 @@ function onSend(message) {
         chat.value.recipient._id,
         message
     )
-
 }
 
-watch(chat.value, () => {
-    wrapper.value.scrollTop = wrapper.value.scrollHeight
-}, { 
-    flush: 'post',
-})
-
-onUpdated(() => wrapper.value.scrollTop = wrapper.value.scrollHeight)
+onUpdated(() => { wrapper.value.scrollTop = wrapper.value.scrollHeight })
 
 </script>
 
@@ -46,13 +38,14 @@ onUpdated(() => wrapper.value.scrollTop = wrapper.value.scrollHeight)
     <div class="chat">
         <ChatHeader :username="chat.recipient.username" />
         
-        <div class="chat__wrapper" ref="wrapper">
+        <div class="chat__wrapper" ref="wrapper">            
             <Message
                 v-if="loaded"
-                v-for="msg in chat.messages"
+                v-for="(msg, index) in chat.messages"
                 :origin="msg.from === userId ? 'sender' : 'recipient'"
                 :text="msg.text"
-                :date="useTimestamp('msg', msg.timestamp)"
+                :date="msg.timestamp"
+                :ex-date="index ? chat.messages[index - 1].timestamp : null"
             />
         </div>
 
@@ -79,15 +72,19 @@ onUpdated(() => wrapper.value.scrollTop = wrapper.value.scrollHeight)
 
 .chat__wrapper {
     width: 100%;
-    padding: 5px 32px;
-    padding-bottom: 10px;
+    padding: 10px 24px;
+    padding-bottom: 15px;
     scrollbar-width: none;
     flex: 1;
     max-height: 100%;
     overflow-y: scroll;
     gap: 5px;
+    z-index: 0;
     @include flex($direction: column, $align: start, $justify: start);
-    @include minSize(1400px) { }
+    @include minSize(1400px) { 
+        padding-left: 100px; // da definirsi meglio
+        padding-right: 50px
+    }
 }
 
 </style>

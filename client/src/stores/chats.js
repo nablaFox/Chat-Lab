@@ -3,14 +3,13 @@ import { defineStore } from "pinia"
 import axios from 'axios'
 import socket from '@socket'
 
-const token = JSON.stringify(JSON.parse(localStorage.getItem('user')).token)
-const authHeader = {
-    'text-type': 'application/json',
-    'Authorization': token,
-}
-
-
 export const useChatStore = defineStore('chats', () => {
+    const token = JSON.stringify(JSON.parse(localStorage.getItem('user')).token)
+    const authHeader = {
+        'text-type': 'application/json',
+        'Authorization': token,
+    }
+
     const chats = ref({})
     const chatId = ref('')
 
@@ -20,7 +19,7 @@ export const useChatStore = defineStore('chats', () => {
         await axios.post('http://cathost.ddns.net/chats', {
             participants: [sender, recipient]
         })
-            .catch(err => console.error(err.response.data))
+            .catch(err => alert(err.response.data))
     }
 
     function update(chat, payload) {
@@ -29,8 +28,8 @@ export const useChatStore = defineStore('chats', () => {
     }
 
     async function init(id) {
-        const response = await axios.get(`http://localhost:3000/chats/user/${id}`)
-            .catch(err => console.error(err.response.data))
+        const response = await axios.get(`http://cathost.ddns.net/chats/user/${id}`)
+            .catch(err => alert(err.response.data))
 
         if (!response) { return }
 
@@ -53,32 +52,34 @@ export const useChatStore = defineStore('chats', () => {
 
     async function load(id) {
         chatId.value = id
-        if (chats.value[id].messages) { return }
+        if (chats.value[id].messages) { return  }
 
-        const response = await axios.get(`http://localhost:3000/chats/${id}`, {
+        const response = await axios.get(`http://cathost.ddns.net/chats/${id}`, {
             headers: authHeader
         })
-            .catch(err => console.error(err.response.data))
+            .catch(err => alert(err.response.data))
     
         if (!response) { return }
 
         chats.value[id].messages = response.data.messages
     }
 
-    async function sendMessage(sender, recipient, text) {
-        await axios.post(`http://cathost.ddns.net/chats/${chatId.value}`, {
+    function sendMessage(sender, recipient, text) {
+        const response = axios.post(`http://cathost.ddns.net/chats/${chatId.value}`, {
             from: sender,
-            text: text
+            text: text,
         }, {
             headers: authHeader
         })
-            .catch(err => console.error(err.response.data))
+            .catch(err => alert(err.response.data))
+
+        if (!response) { return }
 
         socket.sendMessage(recipient, text)
         update(chat.value, {
             from: sender,
             text: text,
-            timestamp: new Date()
+            timestamp: new Date().toString()
         })
     }
 

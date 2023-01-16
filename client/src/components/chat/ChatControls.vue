@@ -19,7 +19,7 @@ const { textarea, input, triggerResize } = useTextareaAutosize()
 function send(e) {
     if (!e.shiftKey) {
         e.preventDefault()
-        emit('send', input.value)
+        input.value && emit('send', input.value)
         textarea.value.style.height="auto"
         input.value = ''
         setTimeout(triggerResize, 0)
@@ -45,14 +45,16 @@ function send(e) {
         </div>
 
         <div class="chat-controls__right">
-            <textarea
-                ref="textarea"
-                class="textarea"
-                rows="1"
-                :placeholder="placeholder"
-                v-model="input"
-                @keydown.enter="send"
-            ></textarea>
+            <div class="textarea__wrapper">
+                <textarea
+                    ref="textarea"
+                    class="textarea"
+                    rows="1"
+                    :placeholder="placeholder"
+                    v-model="input"
+                    @keydown.enter="send"
+                ></textarea>
+            </div>
 
             <div class="chat-controls__trailing">
                 <template v-if="!input">
@@ -65,7 +67,7 @@ function send(e) {
                         :icon="trailingIcon2"
                     />
                 </template>
-
+            
                 <IconButton
                     v-else
                     icon="send"
@@ -84,46 +86,48 @@ function send(e) {
 
 @import "@design";
 
+$spacing: 10px;
+
 .chat-controls {
     width: 100%;
     display: flex;
-    gap: 10px;
-    padding: 0px 10px;
-    padding-bottom: 10px;
+    padding: $spacing;
+    padding-top: 0;
+    gap: $spacing;
 }
 
 .chat-controls__left {
     display: flex;
-    align-items: end;
-    padding-bottom: 4px;
+    align-items: flex-end;
+    position: relative;
+    gap: 5px;
 }
 
 .chat-controls__right {
-    background-color: var(--md-sys-color-surface5);
+    display: flex;
+    align-items: flex-end;
     width: 100%;
-    height: fit-content;
     border-radius: $extra-large-rounded;
-    padding: 4px 10px;
-    gap: 8px;
-    padding-left: 25px;
+    background-color: var(--md-sys-color-surface5);
+    padding: 2px $spacing;
+}
+
+.textarea__wrapper {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
+    padding: 10px 5px;
 }
 
 .textarea {
     overflow: hidden;
     resize: none;
-    padding: 8px 0;
+    padding: 0px 0;
     max-height: 200px;
     scrollbar-width: thin;
-    color: var(--md-sys-color-on-surface)
+    color: var(--md-sys-color-on-surface);
 }
 
-.chat-controls__trailing {
-    align-self: end;
-}
-
-:deep(.material-icons-outlined),
-:deep(.material-icons-round) { font-size: 26px }
 
 </style>

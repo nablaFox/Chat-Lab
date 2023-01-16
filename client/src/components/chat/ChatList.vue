@@ -47,7 +47,7 @@ onBeforeMount(() => selected.value = route.params.chat )
                 v-for="chat in chats"
                 :key="chat._id"
                 :headline="chat.recipient.username"
-                :trailText="useTimestamp('date', chat.lastMessage.timestamp)"
+                :trailText="useTimestamp(chat.lastMessage.timestamp, 'date')"
                 :class="selected == chat._id && 'active'"
                 @click="onClick(chat._id)"
                 round
@@ -82,14 +82,13 @@ onBeforeMount(() => selected.value = route.params.chat )
     overflow-y: scroll;
     scrollbar-width: thin;
     box-sizing: content-box!important;
-    padding-right: 10px;
 }
 
 .list-item {
     background-color: transparent!important;
     width: auto!important;
 
-    &:not(:first-child) { margin-top: 10px }
+    &:not(:first-child) { margin-top: 7px }
 }
 
 </style>

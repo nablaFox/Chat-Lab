@@ -14,7 +14,7 @@ exports.setup = (server) => {
             socket.to(to).to(socket.userID).emit('message', {
                 text,
                 from: socket.userID,
-                timestamp: new Date()
+                timestamp: new Date().toString()
             })
         })
 

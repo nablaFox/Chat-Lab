@@ -103,7 +103,7 @@ const Control = computed(() => {
 }
 
 .menu > .list-item {
-    width: 100%;
+    width: 100%!important;
     height: 48px;
     padding: 8px 12px;
     user-select: none;

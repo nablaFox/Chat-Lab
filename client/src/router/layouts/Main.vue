@@ -47,7 +47,7 @@ const destinations = [
 $normal-ver-spacing: 14px;
 $large-ver-spacing: 24px;
 
-$normal-horiz-spacing: 24px;
+$normal-horiz-spacing: 20px;
 
 .main-layout {
     display: flex;
@@ -57,7 +57,7 @@ $normal-horiz-spacing: 24px;
 
 .nav-rail {
     height: 100%;
-    gap: 50px;
+    gap: 50px!important;
     padding: 0px 12px;
     padding-bottom: $normal-ver-spacing;
     border-right: 1px solid var(--md-sys-color-outline-variant);
