@@ -15,14 +15,13 @@ router
 // user role
 router
     .route('/:id')
-    .get(checkAuth, controller.get) // get a chat by id
+    .get(controller.get) // get a chat by id
     .post(checkAuth, controller.sendMessage) // send a message
     .delete(controller.remove) // remove a chat by id
     
 
 router
-    .route('/user/:userId')
-    .get(checkAuth, controller.getByUser) // Get a list of all conversations for a specific user
+    .route('/user/:userID')
+    .get(controller.getByUser) // Get a list of all conversations for a specific user
 
-
-module.exports = router;
+module.exports = router

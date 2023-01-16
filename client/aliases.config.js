@@ -9,7 +9,8 @@ const aliases = {
     '@stores': 'src/stores',
     '@design': 'src/assets/styles/index.scss',
     '@plugins': 'node_modules',
-    '@composables': 'src/composables'
+    '@composables': 'src/composables',
+    '@socket': 'src/socket.js'
 }
 
 Object.keys(aliases).forEach(key => {

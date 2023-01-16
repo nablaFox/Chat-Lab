@@ -27,21 +27,7 @@ exports.create = async (req, res) => {
     res.json(savedUser.transform())
 }
 
-exports.get = async (req, res) => {
-    await req.locals.user.populate('chat')
-    await req.locals.user.populate('chat.participants', 'username bio')
-
-    const { user } = req.locals
-
-    user.chat = user.chat.map(chat => ({
-        ...chat,
-        _id: chat.id,
-        recipient: chat.participants.find(p => p._id != req.params.id),
-        lastMessage: chat.messages[chat.messages.length - 1] || ''
-    }))
-
-    res.json(user.transform())
-}
+exports.get = async (req, res) => res.json(req.locals.user.transform())
 
 exports.remove = async (req, res) => {
     await req.locals.user.deleteOne()

@@ -5,7 +5,7 @@
 import { ref, onBeforeMount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
-import { useUserStore } from '@stores/users'
+import { useChatStore } from '@stores/chats'
 import { useTimestamp } from '../../composables/timestamp'
 
 import ListItem from '@components/containment/ListItem.vue'
@@ -13,9 +13,9 @@ import Search from '@components/navigation/Search.vue'
 
 const route = useRoute()
 const router = useRouter()
-const userStore = useUserStore()
+const chatStore = useChatStore()
 
-const { user } = storeToRefs(userStore)
+const { chats } = storeToRefs(chatStore)
 
 const selected = ref('')
 
@@ -44,7 +44,7 @@ onBeforeMount(() => selected.value = route.params.chat )
 
         <div class="chat-list__wrapper">
             <ListItem
-                v-for="chat in user.chat"
+                v-for="chat in chats"
                 :key="chat._id"
                 :headline="chat.recipient.username"
                 :trailText="useTimestamp('date', chat.lastMessage.timestamp)"

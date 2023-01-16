@@ -9,7 +9,7 @@ const chatSchema = new mongoose.Schema({
         ref: 'User'
     }],
     messages: [{
-        sender: String,
+        from: String,
         text: String,
         timestamp: Date
     }]

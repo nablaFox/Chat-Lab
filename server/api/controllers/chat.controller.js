@@ -36,12 +36,9 @@ exports.create = async (req, res) => {
 }
 
 exports.get = async (req, res) => {
-    const chat = await req.locals.chat
-        .populate('participants', 'username bio')
-
-    res.json(chat.transform())
+    // load messages as chunks
+    res.json(req.locals.chat.transform())
 }
-
 
 exports.remove = async (req, res) => {
     await req.locals.chat.deleteOne()
@@ -52,7 +49,7 @@ exports.sendMessage = async (req, res) => {
     const { chat } = req.locals
 
     chat.messages.push({
-        sender: req.body.sender,
+        from: req.body.from,
         text: req.body.text,
         timestamp: new Date()
     })
@@ -63,17 +60,22 @@ exports.sendMessage = async (req, res) => {
     res.status(httpStatus.OK).end()
 }
 
-
 exports.getByUser = async (req, res) => {
-    const [chats, err] = await care(() =>
-        Chat.find({
-            participants: req.params.userId
-        })
-            .populate('participants', 'username bio')
+    const [chats, err] = await care(() => Chat.find({ 
+            participants: req.params.userID
+        }).populate('participants', 'username bio')
     )
-    
-    if (err) { return res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err) }
 
-    const transformedChats = chats.map(chat => chat.transform())
+    if (err) { return res.status(httpStatus.NOT_FOUND).send(err) }
+    
+    const showMessages = req.query.preview === 'false'
+
+    const transformedChats = chats.map(chat => ({
+        _id: chat.id,
+        recipient: chat.participants.find(p => p._id != req.params.userID),
+        lastMessage: chat.messages[chat.messages.length - 1] || '',
+        messages: showMessages ? chat.messages : undefined
+    }))
+
     res.json(transformedChats)
 }

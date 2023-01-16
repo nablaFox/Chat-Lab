@@ -3,6 +3,7 @@
 
 <script setup>
 
+import { ref, watch, onUpdated, onMounted, onActivated } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useChatStore } from '@stores/chats'
@@ -17,17 +18,25 @@ const chatStore = useChatStore()
 const { chat } = storeToRefs(chatStore)
 
 const userId = route.params.id
-const recipient = route.meta.recipient
 const loaded = route.meta.loaded
+const wrapper = ref(null)
 
 function onSend(message) {
-
     chatStore.sendMessage(
-        route.params.id,
+        userId,
+        chat.value.recipient._id,
         message
     )
+
 }
 
+watch(chat.value, () => {
+    wrapper.value.scrollTop = wrapper.value.scrollHeight
+}, { 
+    flush: 'post',
+})
+
+onUpdated(() => wrapper.value.scrollTop = wrapper.value.scrollHeight)
 
 </script>
 
@@ -35,13 +44,13 @@ function onSend(message) {
 <template>
 
     <div class="chat">
-        <ChatHeader :username="recipient.username" />
+        <ChatHeader :username="chat.recipient.username" />
         
-        <div class="chat__wrapper">
+        <div class="chat__wrapper" ref="wrapper">
             <Message
                 v-if="loaded"
                 v-for="msg in chat.messages"
-                :origin="msg.sender === userId ? 'sender' : 'recipient'"
+                :origin="msg.from === userId ? 'sender' : 'recipient'"
                 :text="msg.text"
                 :date="useTimestamp('msg', msg.timestamp)"
             />

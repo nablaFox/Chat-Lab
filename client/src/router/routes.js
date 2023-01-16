@@ -1,12 +1,17 @@
 import MainLayout from '@layouts/Main.vue'
 import { ref } from 'vue'
-import { useUserStore } from '@stores/users'
 import { useChatStore } from '@stores/chats'
-
+import { useUserStore } from '@stores/users'
+import socket from '@socket'
 
 async function user(to, from, next) {
+    const chatStore = useChatStore()
     const userStore = useUserStore()
+
+    await chatStore.init(to.params.id)
     await userStore.get(to.params.id)
+    socket.connect(to.params.id)
+
     next()
 }
 
@@ -14,11 +19,7 @@ async function chat(to) {
     const chatStore = useChatStore()
     to.meta.loaded.value = false
 
-    await chatStore.init(to.params.chat) // if needed
-
-    to.meta.recipient.value = chatStore.chats[to.params.chat]
-        .participants
-        .find(p => p._id !== to.params.id)
+    await chatStore.load(to.params.chat) // if needed
 
     to.meta.loaded.value = true
 }
