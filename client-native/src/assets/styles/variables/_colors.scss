@@ -1,0 +1,129 @@
+$palette-colors: (
+    'source': #646cff,
+
+    'primary0': #000000,
+    'primary10': #02006e,
+    'primary20': #0500ab,
+    'primary25': #1617bc,
+    'primary30': #262bc6,
+    'primary35': #353bd2,
+    'primary40': #4349de,
+    'primary50': #5d65f8,
+    'primary60': #7d84ff,
+    'primary70': #9ea3ff,
+    'primary80': #bfc2ff,
+    'primary90': #e0e0ff,
+    'primary95': #f1efff,
+    'primary98': #fbf8ff,
+    'primary99': #fffbff,
+    'primary100': #ffffff,
+
+    'secondary0': #000000,
+    'secondary10': #191a2c,
+    'secondary20': #2e2f42,
+    'secondary25': #393a4d,
+    'secondary30': #444559,
+    'secondary35': #505165,
+    'secondary40': #5c5d72,
+    'secondary50': #75758b,
+    'secondary60': #8f8fa6,
+    'secondary70': #aaa9c1,
+    'secondary80': #c5c4dd,
+    'secondary90': #e1e0f9,
+    'secondary95': #f1efff,
+    'secondary98': #fbf8ff,
+    'secondary99': #fffbff,
+    'secondary100': #ffffff,
+
+    'tertiary0': #000000,
+    'tertiary10': #001e31,
+    'tertiary20': #003350,
+    'tertiary25': #003f61,
+    'tertiary30': #004b72,
+    'tertiary35': #005784,
+    'tertiary40': #006496,
+    'tertiary50': #157db9,
+    'tertiary60': #3f97d5,
+    'tertiary70': #5eb2f1,
+    'tertiary80': #91cdff,
+    'tertiary90': #cce5ff,
+    'tertiary95': #e7f2ff,
+    'tertiary98': #f7f9ff,
+    'tertiary99': #fcfcff,
+    'tertiary100': #ffffff,
+    
+    'neutral0': #000000,
+    'neutral10': #1b1b1f,
+    'neutral20': #313034,
+    'neutral25': #3c3b3f,
+    'neutral30': #47464a,
+    'neutral35': #535256,
+    'neutral40': #5f5e62,
+    'neutral50': #78767a,
+    'neutral60': #929094,
+    'neutral70': #adaaaf,
+    'neutral80': #c8c5ca,
+    'neutral90': #e5e1e6,
+    'neutral95': #f3eff4,
+    'neutral98': #fcf8fd,
+    'neutral99': #fffbff,
+    'neutral100': #ffffff,
+
+    'neutral-variant0': #000000,
+    'neutral-variant10': #1b1b23,
+    'neutral-variant20': #303038,
+    'neutral-variant25': #3b3b43,
+    'neutral-variant30': #46464f,
+    'neutral-variant35': #52515b,
+    'neutral-variant40': #5e5d67,
+    'neutral-variant50': #777680,
+    'neutral-variant60': #918f9a,
+    'neutral-variant70': #acaab4,
+    'neutral-variant80': #c7c5d0,
+    'neutral-variant90': #e4e1ec,
+    'neutral-variant95': #f2effa,
+    'neutral-variant98': #fbf8ff,
+    'neutral-variant99': #fffbff,
+    'neutral-variant100': #ffffff,
+
+    'error0': #000000,
+    'error10': #410002,
+    'error20': #690005,
+    'error25': #7e0007,
+    'error30': #93000a,
+    'error35': #a80710,
+    'error40': #ba1a1a,
+    'error50': #de3730,
+    'error60': #ff5449,
+    'error70': #ff897d,
+    'error80': #ffb4ab,
+    'error90': #ffdad6,
+    'error95': #ffedea,
+    'error98': #fff8f7,
+    'error99': #fffbff,
+    'error100': #ffffff,
+);
+
+@function get-color($key) {
+    @return map-get($palette-colors, $key)
+};
+
+@function palette-color($name, $level) {
+    $color: get-color($name + $level);
+    @return $color
+};
+
+@function surface($sys, $pc) {
+    $background: '';
+    $primary: '';
+
+    @if $sys == 'dark' {
+        $background: palette-color('neutral', 10);
+        $primary: palette-color('primary', 80)
+    } @else if $sys == 'light' {
+        $background: palette-color('neutral', 99);
+        $primary: palette-color('primary', 40)
+    }
+
+    @return mix($background, $primary, $pc)
+}

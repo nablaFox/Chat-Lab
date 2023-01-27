@@ -1,0 +1,36 @@
+@mixin flex($justify: center, $align: center, $direction: row) {
+    display: Flex;
+    justify-content: $justify;
+    align-items: $align;
+    flex-direction: $direction;
+}
+
+@mixin pos($l: unset, $t: unset, $r: unset, $b: unset, $y-off: 0, $x-off: 0) {
+    position: absolute;
+
+    @if $y-off != 0 or $y-off != 0 {
+        transform: translate($x-off, $y-off);
+    }
+
+    left: $l;
+    right: $r;
+    top: $t;
+    bottom: $b
+}
+
+@mixin pseudo-normalize() {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@mixin minSize($breakpoint) {
+    @media screen and (min-width: #{$breakpoint}) { @content }
+};
+
+@mixin maxSize($breakpoint) {
+    @media screen and (max-width: #{$breakpoint}) { @content }
+}

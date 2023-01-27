@@ -1,0 +1,33 @@
+{
+  "name": "echo-native",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@capacitor/android": "^4.6.2",
+    "@capacitor/core": "^4.6.2",
+    "@capacitor/preferences": "^4.0.2",
+    "@capacitor/status-bar": "^4.1.1",
+    "@vueuse/core": "^9.11.0",
+    "axios": "^1.2.3",
+    "dayjs": "^1.11.7",
+    "normalize.css": "^8.0.1",
+    "pinia": "^2.0.29",
+    "socket.io-client": "^4.5.4",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^4.6.2",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/cli-service": "5.0.8",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "sass": "^1.57.1",
+    "vite": "^4.0.0"
+  }
+}

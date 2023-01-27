@@ -1,0 +1,28 @@
+@import "@design";
+@import "@plugins/normalize.css";
+@import "./assets/styles/reset.scss";
+@import "./assets/styles/themes/light.scss";
+@import "./assets/styles/themes/dark.scss";
+
+.state-layer::before {
+    @include pseudo-normalize();
+    background-color: currentColor;
+    opacity: 0;
+}
+
+.state-layer {
+    position: relative;
+    cursor: pointer;
+    @include flex();
+
+    &:active::before { opacity: 12% }
+    & * { z-index: 2 }
+}
+
+body {
+    background-color: var(--md-sys-color-background);
+    color: var(--md-sys-color-on-surface);
+    @extend %body-large;
+}
+
+h1 { @extend %headline-large }

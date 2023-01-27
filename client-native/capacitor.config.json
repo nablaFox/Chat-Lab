@@ -1,0 +1,12 @@
+{
+  "appId": "com.example.app",
+  "appName": "Echo",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+
+  "server": {
+    "androidScheme": "http",
+    "cleartext": true,
+    "allowNavigation": ["http://cathost.ddns.net/*"]
+  }
+}
