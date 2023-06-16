@@ -8,7 +8,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     async function login(username, password) {
         try {
-            const response = await axios.post('http://cathost.ddns.net/auth/login', {
+            const response = await axios.post('https://chat-lab.icedcube.net/auth/login', {
                 username: username,
                 password: password
             })
@@ -22,7 +22,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     async function register(username, password) {
         try {
-            const response = await axios.post('http://localhost:3000/auth/register', {
+            const response = await axios.post('https://chat-lab.icedcube.net/auth/register', {
                 username: username,
                 password: password
             })

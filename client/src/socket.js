@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client'
 
-const URL = 'http://cathost.ddns.net'
+const URL = 'https://chat-lab.icedcube.net'
 
 const socket = io(URL, { autoConnect: false })
 
@@ -10,6 +10,8 @@ class Socket {
     connect(userID) {
         socket.auth = { userID }
         socket.connect()
+
+        console.log('flag')
     }
 
     sendMessage(to, text) {
@@ -17,6 +19,8 @@ class Socket {
             text,
             to: to
         })
+
+        console.log('flag')
     }
 
     listenMessages(callback) {

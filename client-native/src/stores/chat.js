@@ -24,7 +24,7 @@ export const useChatStore = defineStore('chats', () => {
 
         // first check in the local memory.... then:
         const response = await axios.get(
-            `http://cathost.ddns.net/chats/user/${userId}?preview=false`, 
+            `https://chat-lab.icedcube.net/chats/user/${userId}?preview=false`, 
             { headers: authHeader.value }
         ).catch(err => { alert(err.response.data) })
 
@@ -50,7 +50,7 @@ export const useChatStore = defineStore('chats', () => {
     }
 
     function sendMessage(sender, recipient, text) {
-        const response = axios.post(`http://cathost.ddns.net/chats/${chatId.value}`, {
+        const response = axios.post(`https://chat-lab.icedcube.net/chats/${chatId.value}`, {
             from: sender,
             text: text,
         }, {

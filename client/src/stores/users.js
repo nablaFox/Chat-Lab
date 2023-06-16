@@ -7,7 +7,7 @@ export const useUserStore = defineStore('users', () => {
     const chat = ref({})
 
     async function get(id) {
-        const response = await axios.get(`http://cathost.ddns.net/users/${id}`)
+        const response = await axios.get(`https://chat-lab.icedcube.net/users/${id}`)
             .catch(err => console.error(err))
 
 

@@ -16,7 +16,7 @@ export const useChatStore = defineStore('chats', () => {
     const chat = computed(() => chats.value[chatId.value])
 
     async function create(sender, recipient) {
-        await axios.post('http://cathost.ddns.net/chats', {
+        await axios.post('https://chat-lab.icedcube.net/chats', {
             participants: [sender, recipient]
         })
             .catch(err => alert(err.response.data))
@@ -28,7 +28,7 @@ export const useChatStore = defineStore('chats', () => {
     }
 
     async function init(id) {
-        const response = await axios.get(`http://cathost.ddns.net/chats/user/${id}`)
+        const response = await axios.get(`https://chat-lab.icedcube.net/chats/user/${id}`)
             .catch(err => alert(err.response.data))
 
         if (!response) { return }
@@ -54,7 +54,7 @@ export const useChatStore = defineStore('chats', () => {
         chatId.value = id
         if (chats.value[id].messages) { return  }
 
-        const response = await axios.get(`http://cathost.ddns.net/chats/${id}`, {
+        const response = await axios.get(`https://chat-lab.icedcube.net/chats/${id}`, {
             headers: authHeader
         })
             .catch(err => alert(err.response.data))
@@ -65,7 +65,7 @@ export const useChatStore = defineStore('chats', () => {
     }
 
     function sendMessage(sender, recipient, text) {
-        const response = axios.post(`http://cathost.ddns.net/chats/${chatId.value}`, {
+        const response = axios.post(`https://chat-lab.icedcube.net/chats/${chatId.value}`, {
             from: sender,
             text: text,
         }, {
